@@ -5,7 +5,7 @@ import { ExerciseDetail } from "../utils/types";
 import { customButtonStyle } from "../utils/styles";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Markdown from "react-markdown";
-import { materialDark, prism } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { materialDark, prism } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const RecommendationModal = ({
   isOpen,
