@@ -1,0 +1,13 @@
+topic,java,python,javaNote,pythonNote
+Integer Number,"byte b = 100;
+short s = 10000;
+int i = 1000000000;
+long l = 1000000000000000000;",i = 100,, This is of type `Int`.
+Floating-point number,"double d = 100.0; 
+float f = 100.0;",d  = 100.0,,This is of type `Float`.
+Char,char c = 'a',,,
+String ,"String s = ""John""","s = ""John"" or s = 'john'",,This is of type `Str`.
+Boolean,boolean b = true;,b = True,, This is of type `bool`.
+Null,Null,None,,
+Variable Declaration,int a;,,,
+Variable Assignment ,a = 100;,a = 100; ,,No explicit type declaration. 
