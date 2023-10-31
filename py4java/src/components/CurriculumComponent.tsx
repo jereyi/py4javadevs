@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { BookOpenIcon, DocumentCheckIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import { BookOpenIcon, DocumentCheckIcon, ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import type { LessonDetail } from "../utils/types";
 import { namesAndDescriptions } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { titleToFileName } from "../utils/general";
-// TODO: Replace SVG with hero icon component
 type LessonProps =  {
     lessonNumber: number;
     lesson: LessonDetail;
@@ -36,7 +35,7 @@ const Curriculum = () => {
     const LessonSection = (props: LessonProps) => {
         return (<div className="py-5 border-black">
         <details className="group">
-            <summary className="flex justify-between items-center font-medium cursor-pointer">
+            <summary data-testid={`summary-${props.lessonNumber}`} className="flex justify-between items-center font-medium cursor-pointer">
                 <div className="flex items-center">
                     <div className="rounded-full text-black text-2xl font-cal w-16 h-16 bg-white border-2 border-black flex justify-center items-center mx-8"> {props.lessonNumber} </div>
                     <div>
@@ -44,23 +43,22 @@ const Curriculum = () => {
                     </div>
                 </div>
                 <span className="transition group-open:rotate-180 justify-end mr-4">
-            <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path>
-    </svg>
-          </span>
+                <ChevronDownIcon className="h-6 w-6"/>
+            </span>
             </summary>
             <div className="ml-24">
             <p className="text-black text-center mt-3 mb-7 group-open:animate-fadeIn">
                 {props.lesson.desc}
             </p>
             <div className="flex justify-around items-center">
-                <div className="flex items-center cursor-pointer" onClick={() => handleOnClickLesson(props.lesson)}>
+                <button className="flex items-center" onClick={() => handleOnClickLesson(props.lesson)}>
                     <BookOpenIcon className="h-12 w-12 pl-1 mr-3"> </BookOpenIcon> 
                     <div className="font-semibold font-cal text-xl"> Lesson </div>
-                </div>
-                <div className="flex items-center cursor-pointer" onClick={() => handleOnClickExercise(props.lesson)}>
+                </button>
+                <button className="flex items-center" onClick={() => handleOnClickExercise(props.lesson)}>
                     <DocumentCheckIcon className="h-12 w-12 pl-1 mr-3"> </DocumentCheckIcon> 
                     <div className="font-semibold font-cal text-xl"> Exercise </div>
-                </div>   
+                </button>   
             </div>
             </div>
         </details>

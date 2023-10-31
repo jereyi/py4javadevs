@@ -1,17 +1,18 @@
 import { LanguageOption, LessonDetail } from "./types";
 
+export const py4JavaDevsDesc = "Unlock the power of Python with our consise lessons and exercises tailored for Java developed.";
 export const namesAndDescriptions: Array<LessonDetail> = [
-    {"title": "Variables", "desc": "desc", "next": "Casting"},
-    {"title": "Casting", "desc": "desc", "next": "Printing"},
-    {"title": "Printing", "desc": "desc", "next": "Comments"},
-    {"title": "Comments", "desc": "desc", "next": "Separators"},
-    {"title": "Separators", "desc": "desc", "next": "Operators"},
-    {"title": "Operators", "desc": "desc", "next": "String"},
-    {"title": "String", "desc": "desc", "next": "Conditional Statements"},
-    {"title": "Conditional Statements", "desc": "desc", "next": "Loops"},
-    {"title": "Loops", "desc": "desc", "next": "Class and Objects"},
-    {"title": "Class and Objects", "desc": "desc", "next":  "Data Structures"},
-    {"title": "Data Structures", "desc": "desc", "next": null},
+    {"title": "Variables", "desc": "desc1", "next": "Casting"},
+    {"title": "Casting", "desc": "desc2", "next": "Printing"},
+    {"title": "Printing", "desc": "desc3", "next": "Comments"},
+    {"title": "Comments", "desc": "desc4", "next": "Separators"},
+    {"title": "Separators", "desc": "desc5", "next": "Operators"},
+    {"title": "Operators", "desc": "desc6", "next": "String"},
+    {"title": "String", "desc": "desc7", "next": "Conditional Statements"},
+    {"title": "Conditional Statements", "desc": "desc8", "next": "Loops"},
+    {"title": "Loops", "desc": "desc9", "next": "Class and Objects"},
+    {"title": "Class and Objects", "desc": "desc10", "next":  "Data Structures"},
+    {"title": "Data Structures", "desc": "desc11", "next": null},
 ]
 
 export const nameToDetailsMap: Map<String, LessonDetail>  = new Map(Object.entries({
