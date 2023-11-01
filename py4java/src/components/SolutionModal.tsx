@@ -7,11 +7,11 @@ import { customButtonStyle } from '../utils/styles';
 const SolutionModal = (props: { isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, exercise: ExerciseDetail | undefined}) => {
   const [isJava, setIsJava] = useState(true);
 
-  const activeStyles = "w-1/4 mr-2 bg-air-force-blue text-white";
+  const activeStyles = "w-1/4 mr-2 text-air-force-blue";
   const baseStyles = "w-1/4 mr-2 text-black";
 
   return (
-    <>
+    <span data-testid="solutionModal">
       <Modal show={props.isOpen} onClose={() => props.setIsOpen(false)}>
         <Modal.Header className='font-cal'> Exercise Solutions</Modal.Header>
         <Modal.Body className='w-full'>
@@ -28,7 +28,7 @@ const SolutionModal = (props: { isOpen: boolean, setIsOpen: React.Dispatch<React
           </button>
         </Modal.Footer>
       </Modal>
-    </>
+    </span>
   )
 }
 

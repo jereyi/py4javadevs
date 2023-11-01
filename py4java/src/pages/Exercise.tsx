@@ -323,7 +323,7 @@ const Exercise = () => {
           />
         </div>
         <div className="md:right-container flex min-w-[30%] w-full flex-col">
-          <div className="text-xl pb-8 hidden lg:block">
+          <div className="text-xl pb-8 hidden lg:block" data-testid="question">
             <Markdown>{exercises.get(question!)?.question ?? ""}</Markdown>
           </div>
           <OutputWindow outputDetails={outputDetails} />

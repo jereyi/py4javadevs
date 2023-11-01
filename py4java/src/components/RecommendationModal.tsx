@@ -20,7 +20,7 @@ const RecommendationModal = ({
 }) => {
   recommendation = recommendation.replace(/\n\n/g, "\n");
   return (
-    <>
+    <span data-testid="recommendationModal">
       <Modal size='5xl' show={isOpen} onClose={() => setIsOpen(false)}>
         <Modal.Header className="font-cal">
           {" "}
@@ -73,7 +73,7 @@ const RecommendationModal = ({
           </button>
         </Modal.Footer>
       </Modal>
-    </>
+    </span>
   );
 };
 

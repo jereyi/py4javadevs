@@ -1,7 +1,7 @@
 import React from "react";
 import { OutputDetail } from "../utils/types";
 
-const OutputWindow = ({ outputDetails }: {outputDetails: OutputDetail | null}) => {
+const OutputWindow = ({ outputDetails }: { outputDetails: OutputDetail | null }) => {
   const getOutput = () => {
     let statusId = outputDetails?.status?.id;
 
@@ -39,7 +39,7 @@ const OutputWindow = ({ outputDetails }: {outputDetails: OutputDetail | null}) =
       <h1 className="font-bold text-xl font-cal mb-2">
         Output
       </h1>
-      <div className="w-full h-56 bg-dim-gray rounded-md text-white font-normal text-sm border-2 border-black overflow-y-auto">
+      <div className="w-full h-56 bg-dim-gray rounded-md text-white font-normal text-sm border-2 border-black overflow-y-auto" data-testid="output">
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </>

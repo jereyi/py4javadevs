@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-export const content = ["./src/**/*.{js,jsx,ts,tsx}", 
-"node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}"];
+export const content = ["./src/**/*.{js,jsx,ts,tsx}",
+  "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}"];
 export const theme = {
   screens: {
     sm: "480px",
