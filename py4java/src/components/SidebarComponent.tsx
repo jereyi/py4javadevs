@@ -12,14 +12,14 @@ const SidebarComponent = ({ className, title, numExercises, currExercise }: { cl
     <Sidebar className={className}>
       <Sidebar.Items>
         {_.range(0, numExercises).map((i) => currExercise == `q${i + 1}` ?
-          <Sidebar.ItemGroup>
+          <Sidebar.ItemGroup key={`sidebarItem-${i}`}>
             <Sidebar.Item className="bg-sage hover:bg-sage cursor-default" key={`q${i + 1}`}>
               <p className="px-8">
                 Exercise {i + 1}
               </p>
             </Sidebar.Item>
           </Sidebar.ItemGroup>
-          : <Sidebar.ItemGroup> <Sidebar.Item key={`q${i + 1}`}>
+          : <Sidebar.ItemGroup key={`sidebarItem-${i}`}> <Sidebar.Item key={`q${i + 1}`}>
             <p className="cursor-pointer px-8" onClick={() => navigate(`/exercise/${title}/q${i + 1}`)}>
               Exercise {i + 1}
             </p>

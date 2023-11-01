@@ -76,7 +76,7 @@ const Curriculum = () => {
                 </p>
             </div>
             <div className="grid divide-y divide-neutral-200">
-                {lessons.map((lesson, i) => <LessonSection lessonNumber={i+1} lesson={lesson}></LessonSection>)}
+                {lessons.map((lesson, i) => <LessonSection lessonNumber={i+1} lesson={lesson} key={`lessonSection-${i}`}></LessonSection>)}
                 <div className="h-20 flex justify-center items-center text-center font-bold hover:opacity-20 border-black" onClick={() => setIsExpanded(!isExpanded)}> 
                         {!isExpanded ? `Show all ${namesAndDescriptions.length} Lessons` : <ChevronUpIcon className="font-bold h-1/3 w-1/3"></ChevronUpIcon>}
                 </div>
