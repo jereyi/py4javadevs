@@ -20,7 +20,7 @@ export type LanguageOption = {
 export type ThemeOption = {
     label: string;
     value: string;
-    key: string,
+    key: string;
 }
 export type Status = {
     id: number | undefined;
@@ -36,13 +36,14 @@ export type OutputDetail = {
 }
 
 export type ExerciseDetail = {
-    question: string,
-    javaSolution: string,
-    pythonSolution: string,
+    question: string;
+    javaSolution: string;
+    pythonSolution: string;
   }
 
-export type CASSession = {
-    status: string,
-    ticket: string,
-    netid: string,
+export type UserInfo = {
+    netid: string;
+    displayName: string;
+    lastLogin: Date;
+    completedLessons: string[];
   }

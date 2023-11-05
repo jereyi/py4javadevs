@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Ref } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { LessonDetail } from "../utils/types";
 import { titleToFileName, wrappedText, capitalizeText } from "../utils/general";
 import { InformationCircleIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
@@ -7,6 +7,7 @@ import { Popover } from "@headlessui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { nameToDetailsMap } from "../utils/constants";
 import Markdown from "react-markdown";
+import { CasUserContext } from "../context/casUserContext";
 
 type CurriculumRow = {
   topic: string;
@@ -25,11 +26,12 @@ icon: "h-6 w-6 text-white hover:opacity-50",
   inner: "bg-white p-5 whitespace-pre-wrap text-base text-gray-900",
 };
 
-const isComplete = true;
-
 const Lesson = () => {
   const [rows, setRows] = useState<CurriculumRow[]>([]);
   const [details, setDetails] = useState<LessonDetail | null>(null);
+  const { user } = useContext(CasUserContext)!;
+
+  let isComplete = false;
 
   const { title } = useParams();
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ const Lesson = () => {
     try {
     response = await fetch(`/get-lesson?title=${titleToFileName(title!)}`);
     setDetails(nameToDetailsMap.get(title!)!);
+    isComplete = user?.completedLessons.includes(title!) ?? false;
     } catch (error) {
       console.error("Error fetching data:", error);
       navigate('/404')
@@ -58,11 +61,15 @@ const Lesson = () => {
 
   };
 
+  const handleMarkLesson = () => {
+    console.log("mark lesson");
+  }
+
   return (
     <div className="p-16 flex flex-col items-center">
     {isComplete && <div className="text-white font-cal text-2xl bg-sage py-2 px-32 mb-4 rounded-lg border-white border-2"> Complete </div>}
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-2/3 mb-8 border-2 border-black">
-        <Table className="w-full text-left bg-dim-gray text-white ">
+      <div className="mb-8 rounded-lg border-2 border-black">
+        <Table className="w-max text-left bg-dim-gray text-white ">
           <caption className="p-5 text-4xl font-semibold font-cal text-left bg-dim-gray border-black text-white">
             {details?.title}
             <p className="mt-6 text-xl font-normal font-sans">{details?.desc}</p>
@@ -95,7 +102,7 @@ const Lesson = () => {
               >
                 <Table.Cell scope="row" className="px-6 py-4">
                   <div className="pl-3">
-                    <div className="font-semibold whitespace-pre-wrap min-w-max">
+                    <div className="font-semibold whitespace-normal">
                       {row.topic}
                     </div>
                   </div>
@@ -164,7 +171,7 @@ const Lesson = () => {
         Go to Practice Exercises
       </button>
       <div className="flex w-full justify-end">
-        <button className="mt-16 mr-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0">
+        <button className="mt-16 mr-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={() => handleMarkLesson()}>
             Mark Lesson as {isComplete ? "Incomplete" : "Complete"}
         </button>
         {details?.next && <button className="mt-16 flex border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={() => navigate(`/lesson/${titleToFileName(details.next!)}`)}>
