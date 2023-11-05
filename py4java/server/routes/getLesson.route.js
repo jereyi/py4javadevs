@@ -1,6 +1,6 @@
 import { Router } from 'express';
-const router = Router();
 import get from '../controllers/getLesson.controller.js';
+const router = Router();
 
 /* GET lesson. */
 router.get('/', get);

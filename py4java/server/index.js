@@ -4,6 +4,9 @@ import pkg from 'body-parser';
 import getLessonRouter from './routes/getLesson.route.js';
 import getExerciseRouter from "./routes/getExercise.route.js";
 import chatGptRouter from "./routes/chatGpt.route.js";
+import authRouter from "./routes/auth.route.js";
+import session from "cookie-session";
+import cors from "cors";
 
 const { urlencoded } = pkg;
 
@@ -14,13 +17,23 @@ const app = express();
 app.use(pkg.json()); // for parsing application/json
 app.use(urlencoded({ extended: true }));
 
+// CORS middleware
+app.use(cors());
+
+// Configure the app to save a cookie
+app.use(session({
+    keys: [process.env.SESSION_SECRET],
+    maxAge: 24 * 60 * 60 * 1000 * 365 // 365 days
+  }))
+
 app.get('/', (req, res) => {
     res.json({'message': 'ok'});
   })
 
 app.use("/get-lesson", getLessonRouter);
 app.use("/get-exercise", getExerciseRouter);
-app.use("/chat-gpt", chatGptRouter)
+app.use("/chat-gpt", chatGptRouter);
+app.use("/auth", authRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

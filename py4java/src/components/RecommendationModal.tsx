@@ -66,7 +66,7 @@ const RecommendationModal = ({
         </Modal.Body>
         <Modal.Footer>
           <button
-            className={customButtonStyle("w-1/4 mr-2 text-black")}
+            className={customButtonStyle("w-1/4 mr-2 text-black px-4 py-2")}
             onClick={() => setIsOpen(false)}
           >
             Close

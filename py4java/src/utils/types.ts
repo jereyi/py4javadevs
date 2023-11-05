@@ -40,3 +40,9 @@ export type ExerciseDetail = {
     javaSolution: string,
     pythonSolution: string,
   }
+
+export type CASSession = {
+    status: string,
+    ticket: string,
+    netid: string,
+  }
