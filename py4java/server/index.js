@@ -7,6 +7,8 @@ import chatGptRouter from "./routes/chatGpt.route.js";
 import authRouter from "./routes/auth.route.js";
 import session from "cookie-session";
 import cors from "cors";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const { urlencoded } = pkg;
 
@@ -21,8 +23,9 @@ app.use(urlencoded({ extended: true }));
 app.use(cors());
 
 // Configure the app to save a cookie
+// console.log(process.env.SESSION_SECRET);
 app.use(session({
-    keys: [process.env.SESSION_SECRET],
+    keys: ['Shsh!Secret!'],
     maxAge: 24 * 60 * 60 * 1000 * 365 // 365 days
   }))
 

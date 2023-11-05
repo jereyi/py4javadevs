@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { CasUserContext } from "../context/casUserContext";
-import { CASSession } from "../utils/types";
+import { UserInfo } from "../utils/types";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -14,15 +14,22 @@ const Layout = () => {
       fetch("/auth/getUser")
         .then((res) => res.json())
         .then((data) => {
-          setUser((JSON.parse(data) as CASSession).netid);
+          const userInfo = JSON.parse(data);
+          console.log(userInfo);
+          setUser({
+            netid: userInfo.net_id,
+            displayName: userInfo.display_name,
+            lastLogin: new Date(userInfo.last_login),
+            completedLessons: userInfo.completed_lessons,
+          });
         })
         .catch(() => {
           console.log("User not found");
           navigate("/login");
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

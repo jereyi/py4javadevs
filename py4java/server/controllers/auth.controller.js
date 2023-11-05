@@ -1,12 +1,13 @@
 import "cookie-session";
 import CAS from "cas";
+import { getUserByNetid } from "../services/auth.service.js";
 
 var cas = new CAS({
   base_url: process.env.CAS_ENDPOINT,
   service: process.env.SERVER_URL + "/auth/verify",
 });
 
-export async function verify(req, res, next) {
+export async function verify(req, res) {
   try {
     // Check if the user has a redirection destination
     let redirectDestination =
@@ -50,15 +51,21 @@ export async function verify(req, res, next) {
   }
 }
 
-export async function getUser(req, res, next) {
+export async function getUser(req, res) {
+  console.log("CAS " + req.session.cas);
   if (req.session.cas) {
-    res.json(JSON.stringify(req.session.cas));
-  } else {
-    res.status(404).send("User not found");
-  }
+    console.log("CAS Session exists");
+    const user = await getUserByNetid(req.session.cas.netid);
+    console.log("user " + user);
+    if (user) {
+      res.json(JSON.stringify(user));
+      return;
+    }
+  } 
+  res.status(404).send("User not found");
 }
 
-export async function logout(req, res, next) {
+export async function logout(req, res) {
   req.session = null;
   res.redirect(
     process.env.CAS_ENDPOINT + "/logout?url=" + process.env.SERVER_URL

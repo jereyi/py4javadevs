@@ -38,7 +38,7 @@ async function APIcall(code) {
 		console.log(err.response.status); 
 		console.log(err.response.data); 
 	} else { 
-		console.log(err).message; 
+		console.log(err.message); 
 	} 
 	} 
 }; 
