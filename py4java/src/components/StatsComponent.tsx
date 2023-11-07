@@ -27,7 +27,7 @@ const Stats = () => {
         <ChartBarIcon className="h-2/5 w-2/5"> </ChartBarIcon> 
         <div>
             <div> Lessons Completed</div>
-            <div className="font-cal text-3xl"> {lessonsCompleted} Lessons </div>
+            <div className="font-cal text-3xl"> {lessonsCompleted === 1 ? "1 Lesson" : `${lessonsCompleted} Lessons`} </div>
         </div>
         </div>
     </div>);

@@ -27,10 +27,11 @@ import { showErrorToast, showSuccessToast } from "../utils/general";
 
 const Exercise = () => {
   const [code, setCode] = useState(languageOptions[0].default);
+  const [ lastAnalyzedCode, setLastAnalyzedCode ] = useState("");
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState<OutputDetail | null>(null);
-  const [processing, setProcessing] = useState<Boolean | null>(null);
-  const [loading, setLoading] = useState<Boolean | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [theme, setTheme] = useState<ThemeOption>({
     value: "github-light",
     label: "Github Light",
@@ -80,13 +81,14 @@ const Exercise = () => {
   };
 
   const fetchRecommendations = async () => {
-    console.log(code);
-    console.log(language.default);
-    if (code.length == 0 || code == language.default) {
+    const codeCopy = code.slice();
+    if (code.length === 0 || code === language.default) {
       showErrorToast("No code to analyze");
       return
+    } else if (code === lastAnalyzedCode) {
+      setIsOpenRecommendationModal(true);
+      return
     }
-    console.log(code);
     let response;
     setLoading(true);
     setIsOpenRecommendationModal(true);
@@ -98,7 +100,7 @@ const Exercise = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"code": code}),
+        body: JSON.stringify({"code": codeCopy}),
       });
     } catch (error) {
       console.error("Error fetching recommendations: ", error);
@@ -109,6 +111,7 @@ const Exercise = () => {
       response.json().then((data) => 
       {
         showSuccessToast("Fetched recommendations!");
+        setLastAnalyzedCode(codeCopy);
         setRecommendation(data);
         console.log(data);
       }
@@ -277,7 +280,7 @@ const Exercise = () => {
         </div>
         <div className="flex">
           <button
-                  onClick={fetchRecommendations}
+                  onClick={() => loading ? setIsOpenRecommendationModal(true) : fetchRecommendations()}
                   className="flex whitespace-nowrap border-2 border-black z-10 text-[1rem] rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 my-2 mr-4"
                 >
                   {loading ? "Loading..." : <><SparklesIcon className="w-6 h-6 mr-3"/> AI Analysis</> } 
@@ -312,7 +315,7 @@ const Exercise = () => {
             />
             <button
               onClick={handleCompile}
-              disabled={!code}
+              disabled={code.length === 0 || processing}
               className={classnames(
                 "mt-4 border-2 border-black z-10 text-[1rem] rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
                 !code ? "opacity-50" : ""
