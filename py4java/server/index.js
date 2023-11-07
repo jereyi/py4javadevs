@@ -5,6 +5,7 @@ import getLessonRouter from './routes/getLesson.route.js';
 import getExerciseRouter from "./routes/getExercise.route.js";
 import chatGptRouter from "./routes/chatGpt.route.js";
 import authRouter from "./routes/auth.route.js";
+import updateUserRouter from "./routes/updateUser.route.js";
 import session from "cookie-session";
 import cors from "cors";
 import dotenv from 'dotenv'
@@ -37,6 +38,7 @@ app.use("/get-lesson", getLessonRouter);
 app.use("/get-exercise", getExerciseRouter);
 app.use("/chat-gpt", chatGptRouter);
 app.use("/auth", authRouter);
+app.use("/update-user", updateUserRouter)
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { LessonDetail } from "../utils/types";
-import { titleToFileName, wrappedText, capitalizeText } from "../utils/general";
+import { titleToFileName, wrappedText, capitalizeText, showSuccessToast } from "../utils/general";
 import { InformationCircleIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import { Table } from "flowbite-react";
 import { Popover } from "@headlessui/react";
@@ -8,6 +8,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { nameToDetailsMap } from "../utils/constants";
 import Markdown from "react-markdown";
 import { CasUserContext } from "../context/casUserContext";
+import axios, { AxiosError } from "axios";
+import { ToastContainer } from "react-toastify";
+import { showErrorToast } from "../utils/general";
+import "react-toastify/dist/ReactToastify.css";
 
 type CurriculumRow = {
   topic: string;
@@ -29,9 +33,9 @@ icon: "h-6 w-6 text-white hover:opacity-50",
 const Lesson = () => {
   const [rows, setRows] = useState<CurriculumRow[]>([]);
   const [details, setDetails] = useState<LessonDetail | null>(null);
-  const { user } = useContext(CasUserContext)!;
-
-  let isComplete = false;
+  const { user, setUser } = useContext(CasUserContext)!;
+  const [ isComplete, setIsComplete ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const { title } = useParams();
   const navigate = useNavigate();
@@ -40,12 +44,15 @@ const Lesson = () => {
     fetchData();
   }, [title]);
 
+  useEffect(() => {
+    setIsComplete(user?.completedLessons.includes(title!) ?? false);
+  }, [user, title])
+
   const fetchData = async () => {
     let response;
     try {
     response = await fetch(`/get-lesson?title=${titleToFileName(title!)}`);
     setDetails(nameToDetailsMap.get(title!)!);
-    isComplete = user?.completedLessons.includes(title!) ?? false;
     } catch (error) {
       console.error("Error fetching data:", error);
       navigate('/404')
@@ -61,11 +68,55 @@ const Lesson = () => {
 
   };
 
-  const handleMarkLesson = () => {
-    console.log("mark lesson");
+  const handleMarkLesson = async () => {
+    const options = {
+      method: isComplete ? "DELETE" : "PUT",
+      url: "/update-user/lesson",
+      data: {lesson : title}
+    };
+    try {
+      setIsLoading(true);
+      const response = await axios.request(options);
+      console.log(response.data);
+      // Update user to reflect changes to completed lessons
+      fetch("/auth/getUser")
+          .then((res) => res.json())
+          .then((data) => {
+            const userInfo = JSON.parse(data);
+            setUser({
+              netid: userInfo.net_id,
+              displayName: userInfo.display_name,
+              lastLogin: new Date(userInfo.last_login),
+              completedLessons: userInfo.completed_lessons,
+            });
+            showSuccessToast("Successfully Marked Lesson as " + (isComplete ? "Complete" : "Incomplete"));
+            setIsLoading(false);
+          })
+        .catch((err) => {
+          console.log("Error Retrieving User", err);
+          showErrorToast("Error Marking Lesson as " + (isComplete ? "Incomplete" : "Complete"));
+          setIsLoading(false);
+        });
+    } catch (err: unknown) {
+      console.log("Error Marking Lesson", (err as AxiosError).response?.data);
+      showErrorToast("Error Marking Lesson as " + (isComplete ? "Incomplete" : "Complete"));
+      setIsLoading(false);
+    }
   }
 
   return (
+    <>
+    <ToastContainer
+    position="top-right"
+    autoClose={3000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+  />
     <div className="p-16 flex flex-col items-center">
     {isComplete && <div className="text-white font-cal text-2xl bg-sage py-2 px-32 mb-4 rounded-lg border-white border-2"> Complete </div>}
       <div className="mb-8 rounded-lg border-2 border-black">
@@ -171,14 +222,15 @@ const Lesson = () => {
         Go to Practice Exercises
       </button>
       <div className="flex w-full justify-end">
-        <button className="mt-16 mr-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={() => handleMarkLesson()}>
-            Mark Lesson as {isComplete ? "Incomplete" : "Complete"}
+        <button disabled={isLoading} className="mt-16 mr-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={() => handleMarkLesson()}>
+            {isLoading ? "Loading..." : (isComplete ? "Mark Lesson as Incomplete" : "Mark Lesson as Complete")} 
         </button>
         {details?.next && <button className="mt-16 flex border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={() => navigate(`/lesson/${titleToFileName(details.next!)}`)}>
             Next <ArrowSmallRightIcon className="h-6 w-6 ml-2"></ArrowSmallRightIcon>
         </button>}
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BookOpenIcon, DocumentCheckIcon, ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import type { LessonDetail } from "../utils/types";
-import { namesAndDescriptions } from "../utils/constants";
+import { nameToDetailsMap } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { titleToFileName } from "../utils/general";
 type LessonProps =  {
@@ -10,6 +10,7 @@ type LessonProps =  {
 }
 
 const Curriculum = () => {
+    const namesAndDescriptions = Array.from(nameToDetailsMap.values());
     const [isExpanded, setIsExpanded] = useState(false);
     const lessons: Array<LessonDetail> = isExpanded ? namesAndDescriptions : namesAndDescriptions.slice(0, 5);
     const [ lesson, setLesson ] = useState("");
@@ -77,8 +78,9 @@ const Curriculum = () => {
             </div>
             <div className="grid divide-y divide-neutral-200">
                 {lessons.map((lesson, i) => <LessonSection lessonNumber={i+1} lesson={lesson} key={`lessonSection-${i}`}></LessonSection>)}
-                <div className="h-20 flex justify-center items-center text-center font-bold hover:opacity-20 border-black" onClick={() => setIsExpanded(!isExpanded)}> 
-                        {!isExpanded ? `Show all ${namesAndDescriptions.length} Lessons` : <ChevronUpIcon className="font-bold h-1/3 w-1/3"></ChevronUpIcon>}
+                <div className="font-bold border-black" onClick={() => setIsExpanded(!isExpanded)}> 
+                        <span className="hover:opacity-20 flex justify-center items-center text-center h-20">{!isExpanded ? `Show all ${namesAndDescriptions.length} Lessons` : <ChevronUpIcon className="font-bold h-1/3 w-1/3"></ChevronUpIcon>}</span>
+                        
                 </div>
             </div>
         </div>

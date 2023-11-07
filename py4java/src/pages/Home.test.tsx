@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
-import { namesAndDescriptions, py4JavaDevsDesc } from '../utils/constants';
-import { notDeepEqual } from 'assert';
-import e from 'express';
+import { nameToDetailsMap, py4JavaDevsDesc } from '../utils/constants';
+
+const namesAndDescriptions = Array.from(nameToDetailsMap.values());
 
 describe("Home Page", () => {
   let logo: HTMLElement;
@@ -101,7 +101,7 @@ describe("Home Page", () => {
     }
   });
 
-  test("Test lesson row expansion", ()=> {
+  test("tests lesson row expansion", ()=> {
     fireEvent.click(lessonSection);
 
     expect(lessonButton).toHaveTextContent("Lesson");

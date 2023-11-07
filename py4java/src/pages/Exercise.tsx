@@ -23,6 +23,7 @@ import SolutionModal from "../components/SolutionModal";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import RecommendationModal from "../components/RecommendationModal";
 import Markdown from "react-markdown";
+import { showErrorToast, showSuccessToast } from "../utils/general";
 
 const Exercise = () => {
   const [code, setCode] = useState(languageOptions[0].default);
@@ -252,34 +253,11 @@ const Exercise = () => {
     );
   }, []);
 
-  const showSuccessToast = (msg: string) => {
-    toast.success(msg || `Compiled Successfully!`, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-  const showErrorToast = (msg?: string, timer?: number) => {
-    toast.error(msg || `Something went wrong! Please try again.`, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
   return (
     <div className="px-16">
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
