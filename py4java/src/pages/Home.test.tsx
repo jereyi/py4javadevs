@@ -1,74 +1,72 @@
-import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import App from '../App';
-import { nameToDetailsMap, py4JavaDevsDesc } from '../utils/constants';
+import React, { useState } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import App from "../App";
+import { nameToDetailsMap, py4JavaDevsDesc } from "../utils/constants";
+
+import { CasUserContext } from '../context/casUserContext';
+import { UserInfo } from "../utils/types";
 
 const namesAndDescriptions = Array.from(nameToDetailsMap.values());
 
 describe("Home Page", () => {
-  let logo: HTMLElement;
-  let welcome: HTMLElement;
-  let desc: HTMLElement;
-  let startButton: HTMLElement;
-  //const startButton2 = screen.getByRole('');
-  let timer: HTMLElement;
-  let lessonProgress: HTMLElement;
-  let showAllLessons: HTMLElement;
-  let lessonSection: HTMLElement;
-  let lessonButton: HTMLElement;
-  let exerciseButton: HTMLElement;
-  beforeEach(() => {
-    render(<App />);
-    logo = screen.getByRole('link');
-    welcome = screen.getByText(/welcome/i);
-    desc = screen.getByText(py4JavaDevsDesc);
-    startButton = screen.getAllByRole('button')[0];
-    //const startButton2 = screen.getByRole('');
-    timer = screen.getByText(/time spent today/i);
-    lessonProgress = screen.getByText(/lessons completed/i);
-    showAllLessons = screen.getByText(/show all 11 lessons/i);
-    lessonSection = screen.getByTestId('summary-1');
-    lessonButton = screen.getAllByRole("button")[1];
-    exerciseButton = screen.getAllByRole("button")[2];
-  });
-  
-  test('renders home page correctly', () => {
-    for (let i = 0; i < namesAndDescriptions.length; i++) {
-      const {title, desc} = namesAndDescriptions[i];
+  const setup = () => {
+    let user = {
+      netid: "jDoe",
+      displayName: "Jane Doe",
+      lastLogin: new Date("07/27/2023"),
+      completedLessons: ["variables"]
+    } as UserInfo;
 
-      if (i < 5) {
-        const lessonTitle = screen.getByText(title);
+    const setUser = (user: UserInfo) => {}
+
+    render(<CasUserContext.Provider value={{user, setUser}}><App /></CasUserContext.Provider>);
+  }
+
+  test("renders home page correctly", () => {
+    setup();
+    const logo = screen.getByText("Python for Java Devs");;
+    const welcome = screen.getByText("Welcome Jane!");
+    const desc = screen.getByText(py4JavaDevsDesc);
+    const startButton = screen.getAllByRole("button")[0];
+    const dateJoined = screen.getByText("July 27, 2023");
+    const lessonProgress = screen.getByText("1 Lesson");
+    const showAllLessons = screen.getByText(/show all 11 lessons/i);
+    for (let i = 0; i < 5; i++) {
+      const { title, desc } = namesAndDescriptions[i];
+
+      const lessonTitle = screen.getByText(title);
       const lessonDesc = screen.getByText(desc);
 
       expect(lessonTitle).toBeVisible();
       expect(lessonDesc).toBeInTheDocument();
       expect(lessonDesc).not.toBeVisible();
-      } else {
-
-        const lessonTitle = screen.queryByText(title);
-        const lessonDesc = screen.queryByText(desc);
-
-        expect(lessonTitle).toBe(null);
-        expect(lessonDesc).toBe(null);
-      }
     }
 
+    for (let i = 5; i < namesAndDescriptions.length; i++) {
+      const { title, desc } = namesAndDescriptions[i];
+      const lessonTitle = screen.queryByText(title);
+      const lessonDesc = screen.queryByText(desc);
+
+      expect(lessonTitle).toBe(null);
+      expect(lessonDesc).toBe(null);
+    }
 
     expect(logo).toBeVisible();
     expect(welcome).toBeVisible();
     expect(desc).toBeVisible();
     expect(startButton).toBeVisible();
-    expect(timer).toBeVisible();
+    expect(dateJoined).toBeVisible();
     expect(lessonProgress).toBeVisible();
     expect(showAllLessons).toBeVisible();
   });
 
-  test("tests shows all lessons button functionality", ()=>
-  {
+  test("tests shows all lessons button functionality", () => {
+    setup();
+    const showAllLessons = screen.getByText(/show all 11 lessons/i);
     fireEvent.click(showAllLessons);
 
     for (let i = 0; i < namesAndDescriptions.length; i++) {
-      const {title, desc} = namesAndDescriptions[i];
+      const { title, desc } = namesAndDescriptions[i];
 
       const lessonTitle = screen.getByText(title);
       const lessonDesc = screen.getByText(desc);
@@ -80,28 +78,36 @@ describe("Home Page", () => {
 
     fireEvent.click(showAllLessons);
 
-    for (let i = 0; i < namesAndDescriptions.length; i++) {
-      const {title, desc} = namesAndDescriptions[i];
+    for (let i = 0; i < 5; i++) {
+      const { title, desc } = namesAndDescriptions[i];
 
-      if (i < 5) {
-        const lessonTitle = screen.getByText(title);
+      const lessonTitle = screen.getByText(title);
       const lessonDesc = screen.getByText(desc);
 
       expect(lessonTitle).toBeVisible();
       expect(lessonDesc).toBeInTheDocument();
       expect(lessonDesc).not.toBeVisible();
-      } else {
+    }
 
-        const lessonTitle = screen.queryByText(title);
-        const lessonDesc = screen.queryByText(desc);
+    for (let i = 5; i < namesAndDescriptions.length; i++) {
+      const { title, desc } = namesAndDescriptions[i];
+      const lessonTitle = screen.queryByText(title);
+      const lessonDesc = screen.queryByText(desc);
 
-        expect(lessonTitle).toBe(null);
-        expect(lessonDesc).toBe(null);
-      }
+      expect(lessonTitle).toBe(null);
+      expect(lessonDesc).toBe(null);
     }
   });
 
-  test("tests lesson row expansion", ()=> {
+  test("tests lesson row expansion", () => {
+    setup();
+    // First Lesson Section
+    const lessonSection = screen.getByTestId("summary-1");
+    // First Lesson button
+    const lessonButton = screen.getAllByRole("button")[1];
+    // First Exercise Button
+    const exerciseButton = screen.getAllByRole("button")[2];
+
     fireEvent.click(lessonSection);
 
     expect(lessonButton).toHaveTextContent("Lesson");
@@ -109,13 +115,11 @@ describe("Home Page", () => {
     expect(lessonButton).toBeVisible();
     expect(exerciseButton).toBeVisible();
 
-    for (let i = 0; i < 5; i++) {
-      const {desc} = namesAndDescriptions[i];
-      if (i == 0) {
-        expect(screen.getByText(desc)).toBeVisible();
-      } else {
-        expect(screen.getByText(desc)).not.toBeVisible();
-      }
+    expect(screen.getByText(namesAndDescriptions[0].desc)).toBeVisible();
+    for (let i = 1; i < 5; i++) {
+      const { desc } = namesAndDescriptions[i];
+
+      expect(screen.getByText(desc)).not.toBeVisible();
     }
   });
 });

@@ -7,7 +7,7 @@ import { customButtonStyle } from '../utils/styles';
 const SolutionModal = (props: { isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, exercise: ExerciseDetail | undefined}) => {
   const [isJava, setIsJava] = useState(true);
 
-  const activeStyles = "w-1/4 mr-2 text-air-force-blue px-4 py-2";
+  const activeStyles = "w-1/4 mr-2 bg-air-force-blue text-white font-semibold px-4 py-2";
   const baseStyles = "w-1/4 mr-2 text-black px-4 py-2";
 
   return (

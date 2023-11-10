@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CalendarDaysIcon, ChartBarIcon } from "@heroicons/react/24/solid";
 import { CasUserContext } from "../context/casUserContext";
 import { nameToDetailsMap } from "../utils/constants";
@@ -8,7 +8,7 @@ import { nameToDetailsMap } from "../utils/constants";
 const Stats = () => {
     const { user } = useContext(CasUserContext)!;
 
-    const lessonsCompleted = user?.completedLessons.filter((lesson) => nameToDetailsMap.has(lesson)).length;
+    const lessonsCompleted = user?.completedLessons.filter((lesson: String) => nameToDetailsMap.has(lesson)).length;
 
     return (
     <div className="flex justify-around max-h-[20%] bg-dim-gray border-black border-2">

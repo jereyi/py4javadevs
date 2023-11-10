@@ -102,28 +102,44 @@ export enum Status {
  */
 export class FetchResolver {
   private mocks: Map<string, Response> = new Map();
-  constructor() {
-    this.init();
+  private spy!: jest.SpyInstance<Promise<Response>, [input: RequestInfo | URL, init?: RequestInit | undefined]>;
+  constructor(timeout = 0) {
+    this.init(timeout);
   }
 
   public stub(
     uri: string,
-    method: Method,
-    payload: any,
+    method: "GET" | "POST" | "PUT" | "DELETE",
     response: any,
-    status: Status
+    status: Status,
+    payload?: BodyInit,
+    headers?: HeadersInit,
+    credentials?: RequestCredentials,
   ) {
     const finalRequest: { input: RequestInfo | URL; init?: RequestInit } = {
       input: uri
     };
-    if (method == "post") {
-        finalRequest.init = {method: method, body: payload}
+    const init: RequestInit = {};
+    if (method !== "GET") {
+      init.method = method;
     }
-    console.log(
-      `mocking fetch :::\nrequest ${this.prettyPrint(
-        finalRequest
-      )} with \nresponse ${this.prettyPrint(response)} ans status ${status}`
-    );
+    if (credentials) {
+      init.credentials = credentials;
+    }
+    if (headers) {
+      init.headers = headers;
+    }
+    if (payload) {
+      init.body = payload;
+    }
+    if (credentials || headers || payload) {
+      finalRequest.init = init;
+    }
+    // console.log(
+    //   `mocking fetch :::\nrequest ${this.prettyPrint(
+    //     finalRequest
+    //   )} with \nresponse ${this.prettyPrint(response)} ans status ${status}`
+    // );
     this.mocks.set(
       JSON.stringify(finalRequest),
       new Response(JSON.stringify(response), { status: status })
@@ -138,18 +154,17 @@ export class FetchResolver {
     this.mocks.clear();
   }
 
-  private init() {
-    jest
+  private init(timeout: number) {
+    this.spy = jest
       .spyOn(global, "fetch")
       .mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
         const request = {
           input,
           init
         };
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => setTimeout(() => {
           let response = this.mocks.get(JSON.stringify(request));
           if (response) {
-          console.log("mocking response");
             resolve(response);
           } else {
             // rejecting here will hurt component initialization
@@ -159,22 +174,25 @@ export class FetchResolver {
             // return empty response
             resolve(new Response("{}"));
           }
-        });
+        }, input ===  "/chat-gpt" ? timeout : 0));
       });
+  }
+  public getSpy() {
+    return this.spy;
   }
   public static initialize() {
     let resolver = new FetchResolver();
     resolver.stub(
       "http://localhost:8080/endpoint",
-      "post",
-      { id: 100 },
+      "POST",
       {
         created: true
       },
-      200
+      200,
+      JSON.stringify({ id: 100 })
     );
     fetch("http://localhost:8080/endpoint", {
-      method: "post",
+      method: "POST",
       body: JSON.stringify({ id: 100 })
     }).then((response) => {
       if (response.ok) {

@@ -2,7 +2,7 @@ import React, { useState, createContext } from "react";
 import { UserInfo } from "../utils/types";
 
 // Create Context Object
-export const CasUserContext = createContext<{ user: UserInfo | undefined; setUser: React.Dispatch<React.SetStateAction<UserInfo | undefined>> } | undefined >(undefined);
+export const CasUserContext = createContext<{ user: any | undefined; setUser: any} | undefined >(undefined);
 
 // Create a provider for components to consume and subscribe to changes
 export const CasUserContextProvider = (props: { children: any }) => {

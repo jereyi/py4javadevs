@@ -14,7 +14,7 @@ const OutputWindow = ({ outputDetails }: { outputDetails: OutputDetail | null })
       );
     } else if (statusId === 3) {
       return (
-        <pre className="px-2 py-1 font-normal text-sm text-carrot-orange">
+        <pre className="px-2 py-1 font-normal text-sm">
           {atob(outputDetails?.stdout ?? "") !== null
             ? `${atob(outputDetails?.stdout ?? "")}`
             : null}

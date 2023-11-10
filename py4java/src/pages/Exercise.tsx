@@ -24,6 +24,7 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import RecommendationModal from "../components/RecommendationModal";
 import Markdown from "react-markdown";
 import { showErrorToast, showSuccessToast } from "../utils/general";
+import { customButtonStyle } from "../utils/styles";
 
 const Exercise = () => {
   const [code, setCode] = useState(languageOptions[0].default);
@@ -129,8 +130,10 @@ const Exercise = () => {
 
   const onSelectChange = (sl: LanguageOption) => {
     console.log("selected Option...", sl);
+    if (code === language.default) {
+      setCode(sl.default);
+    }
     setLanguage(sl);
-    setCode(sl.default);
   };
 
   useEffect(() => {
@@ -159,7 +162,6 @@ const Exercise = () => {
       source_code: btoa(code),
       stdin: btoa(customInput),
     };
-    // SET UP .env file
     console.log(process.env.REACT_APP_RAPID_API_URL);
     console.log(process.env.REACT_APP_RAPID_API_HOST);
     console.log(process.env.REACT_APP_RAPID_API_KEY);
@@ -202,6 +204,7 @@ const Exercise = () => {
       });
   };
   const checkStatus = async (token: string) => {
+    console.log("Hit check status")
     const options = {
       method: "GET",
       url: process.env.REACT_APP_RAPID_API_URL + "/" + token,
@@ -281,13 +284,13 @@ const Exercise = () => {
         <div className="flex">
           <button
                   onClick={() => loading ? setIsOpenRecommendationModal(true) : fetchRecommendations()}
-                  className="flex whitespace-nowrap border-2 border-black z-10 text-[1rem] rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 my-2 mr-4"
+                  className={customButtonStyle("flex whitespace-nowrap px-4 py-2 my-2 mr-4")}
                 >
                   {loading ? "Loading..." : <><SparklesIcon className="w-6 h-6 mr-3"/> AI Analysis</> } 
           </button>
           <button
                 onClick={() => setIsOpenSolutionModal(true)}
-                className="border-2 border-black z-10 text-[1rem] rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 my-2 mr-4"
+                className={customButtonStyle("my-2 mr-4 px-4 py-2 ")}
               >
                 View Solutions
         </button>
@@ -315,11 +318,8 @@ const Exercise = () => {
             />
             <button
               onClick={handleCompile}
-              disabled={code.length === 0 || processing}
-              className={classnames(
-                "mt-4 border-2 border-black z-10 text-[1rem] rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
-                !code ? "opacity-50" : ""
-              )}
+              disabled={code.length === 0 || code === language.default || processing}
+              className={customButtonStyle("mt-4 px-4 py-2 ")}
             >
               {processing ? "Processing..." : "Compile and Execute"}
             </button>

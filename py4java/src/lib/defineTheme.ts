@@ -1,4 +1,4 @@
-import { loader } from "@monaco-editor/react";
+import loader from "@monaco-editor/loader";
 import monacoThemes from "monaco-themes/themes/themelist.json";
 
 const map = new Map(Object.entries(monacoThemes));
