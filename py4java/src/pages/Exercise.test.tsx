@@ -3,38 +3,23 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor,
-  waitForElementToBeRemoved,
 } from "@testing-library/react";
 import App from "../App";
 import { FetchResolver } from "../utils/fetchResolver";
 import { CasUserContext } from "../context/casUserContext";
-import { OutputDetail, Status, UserInfo } from "../utils/types";
+import { OutputDetail, UserInfo } from "../utils/types";
+import { VARIABLES_EXERCISE_RESPONSE } from "../utils/testing";
 import axios from "axios";
 
 jest.mock("axios");
 
-const variablesExerciseResponse = [
-  {
-    question:
-      "Create a variable named `carname` and assign the value `Volvo` to it.",
-    javaSolution: 'String carname = "Volvo";',
-    pythonSolution: "carname = 'Volvo'",
-  },
-  {
-    question: "Create a variable named `x` and assign the value `50` to it.",
-    javaSolution: "int x = 50;",
-    pythonSolution: "x = 50",
-  },
-];
+const TEST_CODE = "Hello World";
 
-const testCode = "Hello World";
+const CHAT_GPT_RESPONSE = "Test Chat Gpt Response";
 
-const chatGptResponse = "Test Chat Gpt Response";
+const TEST_TOKEN = "1234";
 
-const testToken = "1234";
-
-const outputDetails = {
+const OUTPUT_DETAILS = {
   status: { id: 3, description: "Accepted" },
   memory: "1234",
   time: "0.001",
@@ -49,23 +34,26 @@ describe("Exercise Page", () => {
     jest.restoreAllMocks();
   });
 
-  let fetchResolver: FetchResolver;
-  const setup = (timeout?: number, outputDetails?: OutputDetail) => {
+  beforeEach(() => {
     jest.mock("@monaco-editor/react");
     jest.mock("react-markdown");
+  })
+
+  let fetchResolver: FetchResolver;
+  const setup = (timeout?: number) => {
     fetchResolver = new FetchResolver(timeout);
     fetchResolver.stub(
       "/get-exercise?title=variables",
       "GET",
-      variablesExerciseResponse,
+      VARIABLES_EXERCISE_RESPONSE,
       200
     );
     fetchResolver.stub(
       "/chat-gpt",
       "POST",
-      chatGptResponse,
+      CHAT_GPT_RESPONSE,
       200,
-      JSON.stringify({ code: testCode }),
+      JSON.stringify({ code: TEST_CODE }),
       {
         "Content-Type": "application/json",
       },
@@ -86,19 +74,22 @@ describe("Exercise Page", () => {
         <App />
       </CasUserContext.Provider>
     );
-
-    const exerciseButton = screen.getAllByRole("button")[2];
-    fireEvent.click(exerciseButton);
   };
 
   test("renders exercise page correctly", async () => {
     setup();
 
+    // For some reason, it stays on the exercise page after this button is clicked once
+    const exerciseButton = screen.getAllByRole("button", {
+      name: /exercise/i,
+    })[0];
+    fireEvent.click(exerciseButton);
+
+    // Get all HTML elements.
     const sidebar = screen.getAllByRole("navigation")[1];
     const sidebarElements = await screen.findAllByRole("listitem");
     const languageDropdown = screen.getByText("Java (OpenJDK 13.0.1)");
     const themeDropdown = screen.getByText("Github Light");
-
     const aiAnalysisButton = screen.getByRole("button", {
       name: /ai analysis/i,
     });
@@ -108,18 +99,18 @@ describe("Exercise Page", () => {
     const compileAndExecuteButton = screen.getByRole("button", {
       name: /compile and execute/i,
     });
-
     const editor = screen.getAllByRole("textbox")[0];
     const inputBox = screen.getAllByRole("textbox")[1];
     const question = await screen.findByTestId("question");
     const outputBox = screen.getByTestId("output");
-
     const modal = screen.queryByRole("dialog");
 
+    // Verify get-exercise API call
     const spy = fetchResolver.getSpy();
-
     expect(spy).toBeCalledTimes(1);
     expect(spy).toBeCalledWith("/get-exercise?title=variables");
+
+    // Verify elements are visible and rendered correctly
     expect(sidebar).toBeVisible();
     expect(sidebarElements.length).toBe(2);
     sidebarElements.forEach((element, i) => {
@@ -135,7 +126,7 @@ describe("Exercise Page", () => {
     expect(compileAndExecuteButton).toBeDisabled();
     expect(inputBox).toBeVisible();
     expect(question).toBeVisible();
-    expect(question).toHaveTextContent(variablesExerciseResponse[0].question);
+    expect(question).toHaveTextContent(VARIABLES_EXERCISE_RESPONSE[0].question);
     expect(outputBox).toBeVisible();
     expect(editor).toBeVisible();
     expect(editor).toHaveTextContent(/\/\/ write your solution here!/i);
@@ -144,37 +135,46 @@ describe("Exercise Page", () => {
 
   test("toggles between exercises when sidebar clicked", async () => {
     setup();
+
     const exercise2 = await screen.findByText("Exercise 2");
     const question = await screen.findByTestId("question");
+
     fireEvent.click(exercise2);
-    expect(question).toHaveTextContent(variablesExerciseResponse[1].question);
+
+    expect(question).toHaveTextContent(VARIABLES_EXERCISE_RESPONSE[1].question);
   });
 
   test("opens solution modal when button clicked", async () => {
     setup();
+
     let solutionModal = screen.queryByRole("dialog");
     const viewSolutionButton = screen.getByRole("button", {
       name: /view solutions/i,
     });
 
+    // Solutions modal should not be displayed before button clicked.
     expect(solutionModal).toBeNull();
 
     fireEvent.click(viewSolutionButton);
 
     solutionModal = screen.queryByRole("dialog");
+
+    // Verify modal rendered correctly.
     expect(solutionModal).toBeVisible();
     expect(solutionModal).toHaveTextContent("Exercise Solutions");
     expect(solutionModal).toHaveTextContent("Java");
     expect(solutionModal).toHaveTextContent("Python");
 
     const solution = await screen.findByText(
-      variablesExerciseResponse[0].javaSolution
+      VARIABLES_EXERCISE_RESPONSE[0].javaSolution
     );
+
     expect(solution).toBeVisible();
   });
 
   test("switched between python and java solutions when button clicked", async () => {
     setup();
+
     const viewSolutionButton = screen.getByRole("button", {
       name: /view solutions/i,
     });
@@ -188,10 +188,10 @@ describe("Exercise Page", () => {
     fireEvent.click(pythonButton);
 
     const pythonSolution = await screen.findByText(
-      variablesExerciseResponse[0].pythonSolution
+      VARIABLES_EXERCISE_RESPONSE[0].pythonSolution
     );
     const javaSolution = screen.queryByText(
-      variablesExerciseResponse[0].javaSolution
+      VARIABLES_EXERCISE_RESPONSE[0].javaSolution
     );
     expect(pythonSolution).toBeVisible();
     expect(javaSolution).toBeNull();
@@ -200,13 +200,15 @@ describe("Exercise Page", () => {
   //
   test("text changes when value typed in textbox", async () => {
     setup();
+
     const editor = screen.getAllByRole("textbox")[0];
+
     fireEvent.change(editor, {
-      target: { value: testCode },
+      target: { value: TEST_CODE },
     });
 
     expect(editor).toBeVisible();
-    expect(editor).toHaveTextContent(testCode);
+    expect(editor).toHaveTextContent(TEST_CODE);
   });
 
   test("compile and execute button disabled when no code written", async () => {
@@ -219,9 +221,11 @@ describe("Exercise Page", () => {
     expect(compileAndExecuteButton).toBeDisabled();
 
     const editor = screen.getAllByRole("textbox")[0];
+
     fireEvent.change(editor, {
       target: { value: "" },
     });
+
     expect(compileAndExecuteButton).toBeDisabled();
   });
 
@@ -231,23 +235,23 @@ describe("Exercise Page", () => {
     (axios.request as any)
       .mockImplementationOnce(() => {
         return new Promise((resolve) =>
-          resolve({ data: { token: testToken } })
+          resolve({ data: { token: TEST_TOKEN } })
         );
       })
       .mockImplementationOnce(() => {
-        return new Promise((resolve) => resolve({ data: outputDetails }));
+        return new Promise((resolve) => resolve({ data: OUTPUT_DETAILS }));
       });
 
     const compileAndExecuteButton = screen.getByRole("button", {
       name: /compile and execute/i,
     });
-
     const editor = screen.getAllByRole("textbox")[0];
-    fireEvent.change(editor, {
-      target: { value: testCode },
-    });
 
+    fireEvent.change(editor, {
+      target: { value: TEST_CODE },
+    });
     fireEvent.click(compileAndExecuteButton);
+
     const output = await screen.findByText("Hello World");
     const status = await screen.findByText(/status/i);
     const memory = await screen.findByText(/memory/i);
@@ -255,15 +259,14 @@ describe("Exercise Page", () => {
 
     expect(output).toBeVisible();
     expect(status).toBeVisible();
-    expect(status).toHaveTextContent(outputDetails.status.description);
+    expect(status).toHaveTextContent(OUTPUT_DETAILS.status.description);
     expect(memory).toBeVisible();
-    expect(memory).toHaveTextContent(outputDetails.memory);
+    expect(memory).toHaveTextContent(OUTPUT_DETAILS.memory);
     expect(time).toBeVisible();
-    expect(time).toHaveTextContent(outputDetails.time);
-
+    expect(time).toHaveTextContent(OUTPUT_DETAILS.time);
     expect(axios.request).toBeCalledTimes(2);
     expect(axios.request).toBeCalledWith({
-      data: { language_id: 62, source_code: btoa(testCode), stdin: "" },
+      data: { language_id: 62, source_code: btoa(TEST_CODE), stdin: "" },
       headers: {
         "Content-Type": "application/json",
         "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
@@ -281,12 +284,13 @@ describe("Exercise Page", () => {
       },
       method: "GET",
       params: { base64_encoded: "true", fields: "*" },
-      url: `${process.env.REACT_APP_RAPID_API_URL }/${testToken}`,
+      url: `${process.env.REACT_APP_RAPID_API_URL }/${TEST_TOKEN}`,
     });
   });
 
   test("opens recommendation modal when ai analysis button clicked", async () => {
     setup();
+
     const editor = screen.getAllByRole("textbox")[0];
     const aiAnalysisButton = screen.getByRole("button", {
       name: /ai analysis/i,
@@ -294,17 +298,17 @@ describe("Exercise Page", () => {
     const recommendationModal = screen.getByTestId("recommendationModal");
 
     fireEvent.change(editor, {
-      target: { value: testCode },
+      target: { value: TEST_CODE },
     });
     fireEvent.click(aiAnalysisButton);
 
-    const recommendation = await screen.findByText(chatGptResponse);
+    const recommendation = await screen.findByText(CHAT_GPT_RESPONSE);
 
     const spy = fetchResolver.getSpy();
     expect(spy).toBeCalledTimes(2);
     expect(spy).toBeCalledWith("/get-exercise?title=variables");
     expect(spy).toBeCalledWith("/chat-gpt", {
-      body: `{"code":"${testCode}"}`,
+      body: `{"code":"${TEST_CODE}"}`,
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -315,25 +319,29 @@ describe("Exercise Page", () => {
 
   test("does not request recommendations if no code written", async () => {
     setup();
+
     const editor = screen.getAllByRole("textbox")[0];
     const aiAnalysisButton = screen.getByRole("button", {
       name: /ai analysis/i,
     });
 
     fireEvent.click(aiAnalysisButton);
+
     let modal = screen.queryByRole("dialog");
+
     expect(modal).toBeNull();
 
     fireEvent.change(editor, {
       target: { value: "" },
     });
     fireEvent.click(aiAnalysisButton);
+
     modal = screen.queryByRole("dialog");
-    expect(modal).toBeNull();
 
     const spy = fetchResolver.getSpy();
     expect(spy).toBeCalledTimes(1); // once for the getLessons call
     expect(spy).toBeCalledWith("/get-exercise?title=variables");
+    expect(modal).toBeNull();
   });
 
   test("does not resend recommendation request while previous request loading", async () => {
@@ -344,7 +352,7 @@ describe("Exercise Page", () => {
       name: /ai analysis/i,
     });
     fireEvent.change(editor, {
-      target: { value: testCode },
+      target: { value: TEST_CODE },
     });
 
     // Open modal
@@ -366,7 +374,7 @@ describe("Exercise Page", () => {
     expect(spy).toBeCalledTimes(2);
     expect(spy).toBeCalledWith("/get-exercise?title=variables");
     expect(spy).toBeCalledWith("/chat-gpt", {
-      body: `{"code":"${testCode}"}`,
+      body: `{"code":"${TEST_CODE}"}`,
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -381,7 +389,7 @@ describe("Exercise Page", () => {
       name: /ai analysis/i,
     });
     fireEvent.change(editor, {
-      target: { value: testCode },
+      target: { value: TEST_CODE },
     });
 
     // Open modal
@@ -395,7 +403,7 @@ describe("Exercise Page", () => {
     fireEvent.click(aiAnalysisButton);
 
     // Verify that recommendation is still displayed
-    const recommendation = await screen.findByText(chatGptResponse);
+    const recommendation = await screen.findByText(CHAT_GPT_RESPONSE);
     expect(recommendation).toBeVisible();
 
     // Verify only one request sent to chat gpt
@@ -403,7 +411,7 @@ describe("Exercise Page", () => {
     expect(spy).toBeCalledTimes(2);
     expect(spy).toBeCalledWith("/get-exercise?title=variables");
     expect(spy).toBeCalledWith("/chat-gpt", {
-      body: `{"code":"${testCode}"}`,
+      body: `{"code":"${TEST_CODE}"}`,
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       method: "POST",

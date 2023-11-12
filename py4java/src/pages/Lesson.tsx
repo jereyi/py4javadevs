@@ -76,32 +76,25 @@ const Lesson = () => {
     };
     try {
       setIsLoading(true);
-      const response = await axios.request(options);
-      console.log(response.data);
+      let response = await axios.request(options);
       // Update user to reflect changes to completed lessons
-      fetch("/auth/getUser")
-          .then((res) => res.json())
-          .then((data) => {
-            const userInfo = JSON.parse(data);
-            setUser({
-              netid: userInfo.net_id,
-              displayName: userInfo.display_name,
-              lastLogin: new Date(userInfo.last_login),
-              completedLessons: userInfo.completed_lessons,
-            });
-            showSuccessToast("Successfully Marked Lesson as " + (isComplete ? "Complete" : "Incomplete"));
-            setIsLoading(false);
-          })
-        .catch((err) => {
-          console.log("Error Retrieving User", err);
-          showErrorToast("Error Marking Lesson as " + (isComplete ? "Incomplete" : "Complete"));
-          setIsLoading(false);
-        });
-    } catch (err: unknown) {
-      console.log("Error Marking Lesson", (err as AxiosError).response?.data);
+      response = await axios.get("/auth/getUser");
+      
+      const userInfo = JSON.parse(response.data);
+      setUser({
+        netid: userInfo.net_id,
+        displayName: userInfo.display_name,
+        lastLogin: new Date(userInfo.last_login),
+        completedLessons: userInfo.completed_lessons,
+      });
+      setIsComplete(user?.completedLessons.includes(title!) ?? false);
+      showSuccessToast("Successfully Marked Lesson as " + (isComplete ? "Complete" : "Incomplete"));
+    } catch (err) {
+      console.log("Error Marking Lesson", err);
       showErrorToast("Error Marking Lesson as " + (isComplete ? "Incomplete" : "Complete"));
-      setIsLoading(false);
     }
+    console.log(user);
+    setIsLoading(false);
   }
 
   return (
@@ -164,7 +157,7 @@ const Lesson = () => {
                       <Popover className="relative">
                         {({ open }) => (
                           <>
-                            <Popover.Button
+                            <Popover.Button 
                               className={
                                 "mr-4 focus:outline-none focus-visible:outline-none"
                               }

@@ -135,11 +135,11 @@ export class FetchResolver {
     if (credentials || headers || payload) {
       finalRequest.init = init;
     }
-    // console.log(
-    //   `mocking fetch :::\nrequest ${this.prettyPrint(
-    //     finalRequest
-    //   )} with \nresponse ${this.prettyPrint(response)} ans status ${status}`
-    // );
+    console.log(
+      `mocking fetch :::\nrequest ${this.prettyPrint(
+        finalRequest
+      )} with \nresponse ${this.prettyPrint(response)} ans status ${status}`
+    );
     this.mocks.set(
       JSON.stringify(finalRequest),
       new Response(JSON.stringify(response), { status: status })
@@ -165,6 +165,7 @@ export class FetchResolver {
         return new Promise((resolve) => setTimeout(() => {
           let response = this.mocks.get(JSON.stringify(request));
           if (response) {
+            console.log(`handling :::\nrequest ${this.prettyPrint(request)}`);
             resolve(response);
           } else {
             // rejecting here will hurt component initialization
