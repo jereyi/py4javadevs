@@ -49,7 +49,10 @@ app.use((err, req, res, next) => {
     return;
 });
 
-  
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-});
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+}
+
+// Export server
+export default app;

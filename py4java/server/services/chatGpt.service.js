@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config()
 
-async function APIcall(code) { 
+export async function APIcall(code) {
   console.log("Making API call...")
 
   console.log(process.env.OPENAI_SECRET_KEY)
@@ -10,7 +10,6 @@ async function APIcall(code) {
     apiKey: process.env.OPENAI_SECRET_KEY 
   });
 
-	try { 
 	const GPTOutput = await openai.chat.completions.create({
     model:"gpt-3.5-turbo",
     messages:[
@@ -33,14 +32,4 @@ async function APIcall(code) {
 	const output_text = GPTOutput.choices[0].message.content; 
 	console.log(output_text); 
   return output_text;
-	} catch (err) { 
-	if (err.response) { 
-		console.log(err.response.status); 
-		console.log(err.response.data); 
-	} else { 
-		console.log(err.message); 
-	} 
-	} 
 }; 
-
-export default APIcall;

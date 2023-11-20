@@ -41,6 +41,7 @@
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "pg": "^8.11.3",
+    "pg-pool": "^3.6.1",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-cas-client": "^1.1.0",
@@ -61,6 +62,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-server": "NODE_ENV=test PORT=6666 vitest --watch --coverage --dir ./server",
     "eject": "react-scripts eject",
     "server": "node-env-run server --exec nodemon | pino-colada"
   },
@@ -83,22 +85,28 @@
     ]
   },
   "devDependencies": {
+    "@types/chai": "^4.3.10",
     "@types/lodash": "^4.14.200",
     "@types/papaparse": "^5.3.9",
     "@types/react-select": "^5.0.1",
     "@types/react-syntax-highlighter": "^15.5.9",
     "@types/react-toastify": "^4.1.0",
+    "@vitest/coverage-v8": "^0.34.6",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
     "msw": "^2.0.1",
     "node-env-run": "^4.0.2",
     "nodemon": "^2.0.20",
     "pino-colada": "^1.5.1",
     "process": "^0.11.10",
     "stream-http": "^3.2.0",
+    "supertest": "^6.3.3",
     "tailwindcss": "^3.3.3",
     "ts-loader": "^9.5.0",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "vitest": "^0.34.6"
   },
   "type": "module",
   "proxy": "http://127.0.0.1:3001/",
@@ -107,6 +115,7 @@
     "moduleNameMapper": {
       "react-markdown": "<rootDir>/node_modules/react-markdown/react-markdown.min.js",
       "axios": "axios/dist/node/axios.cjs"
-    }
+    },
+    "transform": {}
   }
 }

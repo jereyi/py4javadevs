@@ -1,6 +1,8 @@
 import "cookie-session";
 import CAS from "cas";
 import { getUserByNetid } from "../services/auth.service.js";
+import dotenv from 'dotenv';
+dotenv.config()
 
 var cas = new CAS({
   base_url: process.env.CAS_ENDPOINT,
@@ -33,7 +35,7 @@ export async function verify(req, res) {
     await cas.validate(ticket, function (err, status, netid) {
       if (err) {
         console.log("Error in cas validation: " + JSON.stringify(err));
-        res.send({ error: err }).status(500);
+        res.error(err).status(500);
         return;
       }
       // Save the user's session data

@@ -60,7 +60,7 @@ const Exercise = () => {
     try {
       response = await fetch(`/get-exercise?title=${titleToFileName(title!)}`);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching exercise data");
         navigate('/404')
       }
 
@@ -76,7 +76,7 @@ const Exercise = () => {
         }
         );
     } else {
-        console.error(`HTTP ${response?.status}: ${response?.statusText}`);
+        console.error(`HTTP ${response?.status}: ${response?.text}`);
         navigate('/404')
     }
   };
@@ -90,39 +90,28 @@ const Exercise = () => {
       setIsOpenRecommendationModal(true);
       return
     }
-    let response;
+
     setLoading(true);
     setIsOpenRecommendationModal(true);
     try {
       // TODO: Add caching
-      response = await fetch('/chat-gpt', {
+      const data = await fetch('/chat-gpt', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({"code": codeCopy}),
-      });
+      }).then(res => res.json());
+      showSuccessToast("Fetched recommendations!");
+      setLastAnalyzedCode(codeCopy);
+      setRecommendation(data);
+      console.log(data);
     } catch (error) {
-      console.error("Error fetching recommendations: ", error);
       showErrorToast("Error fetching recommendations");
-    }
-
-    if (response?.ok) {
-      response.json().then((data) => 
-      {
-        showSuccessToast("Fetched recommendations!");
-        setLastAnalyzedCode(codeCopy);
-        setRecommendation(data);
-        console.log(data);
-      }
-      );
-  } else {
-      console.error(`HTTP ${response?.status}: ${response?.statusText}`);
-      showErrorToast(`HTTP ${response?.status}: ${response?.statusText}`);
       setIsOpenRecommendationModal(false);
-  }
-  setLoading(false);
+    }
+    setLoading(false);
   }
 
   const enterPress = useKeyPress("Enter");

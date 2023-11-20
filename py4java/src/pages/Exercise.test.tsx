@@ -344,6 +344,8 @@ describe("Exercise Page", () => {
     expect(modal).toBeNull();
   });
 
+  // TODO: Add error handing tests
+
   test("does not resend recommendation request while previous request loading", async () => {
     setup(10000);
     // Initialize editor with test data
