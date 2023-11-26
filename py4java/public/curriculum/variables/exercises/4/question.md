@@ -1,0 +1,2 @@
+Declare a boolean variable called `is_raining` 
+and assign it the value `True`.
