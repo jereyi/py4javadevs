@@ -1,0 +1,1 @@
+Write a function that takes two parameters (integers) and returns their sum.

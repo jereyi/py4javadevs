@@ -1,0 +1,1 @@
+Indexing and the `get` method both return the value of the specified key. However, if the key is not present, indexing will throw an error while the `get` method will just return `None`.

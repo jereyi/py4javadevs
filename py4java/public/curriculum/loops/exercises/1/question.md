@@ -1,0 +1,1 @@
+Use a `while` loop to print a countdown from 5 to 1.

@@ -1,0 +1,1 @@
+You can pass in a custom delimiter as the argument to the `split()` method.

@@ -1,0 +1,1 @@
+In Java, user input is obtained using the `Scanner` class in the java.util package. The `Scanner` class provides various methods for reading different types of input. The `nextLine()` method reads the entire line, including spaces.

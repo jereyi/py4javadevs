@@ -1,2 +1,1 @@
-Declare three integer variables (`a`, `b`, and `c`) 
-and assign them values (1, 2, 3) in a single line.
+Declare three integer variables (`a`, `b`, and `c`) and assign them values (1, 2, 3) in a single line.
