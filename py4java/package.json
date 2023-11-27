@@ -36,6 +36,7 @@
     "md-block": "^0.0.1",
     "monaco-editor": "^0.44.0",
     "monaco-themes": "^0.4.4",
+    "node-fetch": "^3.3.2",
     "openai": "^4.13.0",
     "papaparse": "^5.4.1",
     "passport": "^0.6.0",

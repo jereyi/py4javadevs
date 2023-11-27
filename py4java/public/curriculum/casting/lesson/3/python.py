@@ -1,2 +1,2 @@
 x = "42"
-type(x)  # Evaluates to <class 'str'>
+type(x) # Evaluates to <class 'str'>

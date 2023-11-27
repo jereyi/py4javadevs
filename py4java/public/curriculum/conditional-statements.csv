@@ -1,0 +1,77 @@
+topic,java,python,javaNote,pythonNote
+If-Else,"int x = 10;
+
+if (x > 0) {
+    System.out.println(""Positive"");
+} else {
+    System.out.println(""Non-positive"");
+}
+","x = 10
+
+if x > 0:
+    print(""Positive"")
+else:
+    print(""Non-positive"")
+",,"Recall that, in Python, code blocks are defined by indentation. "
+Nested if,"int x = 10;
+
+if (x > 0) {
+    System.out.println(""Positive"");
+    if (x % 2 == 0) {
+        System.out.println(""Even"");
+    } else {
+        System.out.println(""Odd"");
+    }
+} else {
+    System.out.println(""Non-positive"");
+}
+","x = 10
+
+if x > 0:
+    print(""Positive"")
+    if x % 2 == 0:
+        print(""Even"")
+    else:
+        print(""Odd"")
+else:
+    print(""Non-positive"")
+",,
+If Else If,"if (b > a) {     
+    System.out.println(""b is greater than a""); 
+} else if (a == b) {
+    System.out.println(""a and b are equal"");
+}","if b > a:
+    print(""b is greater than a"")
+elif a == b:
+    print(""a and b are equal"")",,
+Switch-Case,"int day = 3;
+
+switch (day) {
+    case 1:
+        System.out.println(""Monday"");
+        break;
+    case 2:
+        System.out.println(""Tuesday"");
+        break;
+    // ... (other cases)
+    default:
+        System.out.println(""Unknown day"");
+}
+
+","day = 3
+
+if day == 1:
+    print(""Monday"")
+elif day == 2:
+    print(""Tuesday"")
+# ... (other cases)
+else:
+    print(""Unknown day"")
+}
+
+",,"Python does not have an equivalent to Java's switch statement.
+`If`-`Elif`-`Else` clauses are used instead."
+Ternary Operator,"int x = 10;
+String result = (x > 0) ? ""Positive"" : ""Non-positive"";","x = 10
+result = ""Positive"" if x > 0 else ""Non-positive""","
+A ternary operator is a concise shorthand for expressing a simple conditional statement in a single line, using the syntax `condition ? true_value : false_value`.",

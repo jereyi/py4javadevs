@@ -1,3 +1,32 @@
 question,javaSolution,pythonSolution
-Create a variable named `carname` and assign the value `Volvo` to it.,"String carname = ""Volvo"";",carname = 'Volvo'
-Create a variable named `x` and assign the value `50` to it.,int x = 50;,x = 50
+"Declare an integer variable called `num` 
+and assign it the integer value 7.","public class Solution {
+    public static void main(String[] args) {
+        int num = 7;
+    }
+}",num = 7
+"Declare a floating-point variable called `pi` 
+and assign it the value of $pi$ (3.14).","public class Solution {
+    public static void main(String[] args) {
+        double pi = 3.14;
+    }
+}
+",pi = 3.14
+"Declare a string variable called `message` 
+and assign it the text of ""Hello, Python!"".","public class Solution {
+    public static void main(String[] args) {
+        String message = ""Hello, Python!"";
+    }
+}","message = ""Hello, Python!"""
+"Declare a boolean variable called `is_raining` 
+and assign it the value `True`.","public class Solution {
+    public static void main(String[] args) {
+        boolean is_raining = false;
+    }
+}",is_raining = False
+"Declare three integer variables (`a`, `b`, and `c`) 
+and assign them values (1, 2, 3) in a single line.","public class Solution {
+    public static void main(String[] args) {
+        int a = 1, b = 2, c = 3;
+    }
+}","a, b, c = 1, 2, 3"

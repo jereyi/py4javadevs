@@ -1,0 +1,44 @@
+question,javaSolution,pythonSolution
+"Declare a variable `numbers` and assign it a list of numbers.
+
+Use list comprehensions to create a new list squared_numbers 
+that contains the squares of all numbers in the given list. 
+Print the result.
+(Hint: `**` is the exponentiation operator in Python.)
+","import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public static void main(String[] args) {
+        List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        List<Integer> squaredNumbers = ArrayList<>();
+        for (Integer number : numbers) {
+           squaredNumbers.add(number * number);
+        }
+        System.out.println(""Squared numbers: "" + squaredNumber);
+    }
+}","numbers = [1, 2, 3, 4, 5]
+squared_numbers = [num ** 2 for num in numbers]
+
+print(f""Squared numbers: {squared_numbers}"")"
+"Declare a variable `numbers` and assign it a list of numbers.
+
+Use list comprehensions and the `sum` function to calculate the sum of all even numbers in the list.
+Print the result.","import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public static void main(String[] args) {
+        List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Integer sum = 0;
+        for (Integer number : numbers) {
+            if (number % 2 == 0) {
+                sum += number;
+            }
+        }
+        System.out.println(""Sum of even numbers: "" + result);
+    }
+}
+","numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+result = sum([num for num in numbers if num % 2 == 0])
+print(f""Sum of even numbers: {result}"")"

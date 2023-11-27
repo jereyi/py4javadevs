@@ -1,0 +1,1 @@
+Declare a variable `name` with your name and print a message using a formatted string.

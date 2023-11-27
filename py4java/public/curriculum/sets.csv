@@ -1,0 +1,34 @@
+topic,java,python,javaNote,pythonNote
+Declaration,"Set<Integer> mySet = new HashSet<>();
+","my_set = {1, 2, 3}
+",,
+Adding Elements,"Set<Integer> mySet = new HashSet<>();
+mySet.add(4);
+
+","my_set = {1, 2, 3}
+my_set.add(4)
+",,
+Removing Elements,"mySet.remove(2); // Removes 2 from set
+mySet.clear(); // Removes all elements","my_set.remove(2) // Removes 2 from set, throws error if not present
+my_set.discard(3) // Removes 3 from set, does not throw error if not present
+popped_element = my_set.pop() // Removes a random element from set 
+",,
+"Union, Intersection, and Difference","Set<Integer> set1 = new HashSet<>(Arrays.asList(1, 2, 3));
+Set<Integer> set2 = new HashSet<>(Arrays.asList(2, 3, 4));
+set1.addAll(set2);  // Union
+set1.retainAll(set2);  // Intersection
+set1.removeAll(set2);  // Difference
+","set1 = {1, 2, 3}
+set2 = {2, 3, 4}
+union_set = set1 | set2
+intersection_set = set1 & set2
+difference_set = set1 - set2
+",,
+Conversion to/from Lists,"List<Integer> listFromSet = new ArrayList<>(mySet);
+Set<Integer> setFromList = new HashSet<>(Arrays.asList(1, 2, 3));
+","list_from_set = list(my_set)
+set_from_list = set([1, 2, 3])",,
+Checking Subset and Superset,"boolean isSubset = set1.containsAll(set2);
+","s_subset = set1.issubset(set2)
+is_superset = set1.issuperset(set2)
+",,

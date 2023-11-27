@@ -1,1 +1,2 @@
-PI_DAY = "March 14"
+# snake_case
+my_variable_name = 42

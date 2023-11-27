@@ -1,0 +1,1 @@
+The `if` statement may be omitted.

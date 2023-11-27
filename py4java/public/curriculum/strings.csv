@@ -1,0 +1,149 @@
+topic,java,python,javaNote,pythonNote
+Declaration,"String greeting = ""Hello, World!"";","greeting = ""Hello, World""",,
+Concatenation,"String firstName = ""John"";
+String lastName = ""Doe"";
+String fullName = firstName + "" "" + lastName;
+","first_name = ""John""
+last_name = ""Doe""
+full_name = first_name + "" "" + last_name",,
+Length,"// Uses length() method on string object
+int length = greeting.length();
+","# Uses built-in len() function
+length = len(""Hello, World!"")
+",,
+Substring Extraction,"String substring = greeting.substring(7, 12);
+","substring = greeting[7:12]
+",,
+Substring Location,"int index = greeting.indexOf(""World"") //7","int index = greeting.find(""World"") # Evaluates to 7",,
+Indexing,"String myString = ""Hello, World!"";
+
+// Accessing the first character
+// Evaluates to 'H'
+char firstChar = myString.charAt(0);
+
+// Accessing the last character
+// Evaluates to '!'
+char lastChar = myString.charAt(myString.length() - 1);
+","my_string = ""Hello, World!""
+
+# Accessing the first character
+# Evaluates to ""H""
+first_char = my_string[0] 
+
+# Accessing the last character
+# Evaluates to ""!""
+last_char = my_string[-1] 
+
+",,"Since the `char` type does not exist in Python, `first_char` and `last_char` are of type `str` (i.e. they are strings)."
+Comparison,"String string1 = ""hello"";
+String string2 = ""world"";
+
+// Using compareTo method
+int result = string1.compareTo(string2);
+
+if (result == 0) {
+    System.out.println(""Strings are equal"");
+} else if (result < 0) {
+    System.out.println(""string1 comes before string2"");
+} else {
+    System.out.println(""string1 comes after string2"");
+}","string1 = ""hello""
+string2 = ""world""
+
+# Using equality operator
+if string1 == string2:
+    print(""Strings are equal"")
+else:
+    print(""Strings are not equal"")
+
+# Using less than operator
+if string1 < string2:
+    print(""string1 comes before string2"")
+else:
+    print(""string1 comes after or is equal to string2"")",,"In Python, you can use comparison operators (==, !=, <, <=, >, >=) directly on strings. "
+Contains,"String string1 = ""Hello, World!"";
+String substring = ""World"";
+
+if (string1.contains(substring)) {
+    System.out.println(""Substring found!"");
+} else {
+    System.out.println(""Substring not found!"");
+}","string1 = ""Hello, World!""
+substring = ""World""
+
+if substring in string1:
+    print(""Substring found!"")
+else:
+    print(""Substring not found!"")
+",,
+String format,"String name = ""Alice"";
+int age = 30;
+String message = String.format(""Hello, %s! You are %d years old."", name, age);
+","name = ""Alice""
+age = 30
+message = f""My name is {name} and I am {age} years old.""
+message = ""My name is {} and I am {} years old."".format(name, age)
+",,
+isEmpty,"String myString = ""Hello, World!"";
+
+if (myString.isEmpty()) {
+    System.out.println(""String is empty"");
+} else {
+    System.out.println(""String is not empty"");
+}","my_string = ""Hello, World!""
+
+if not my_string:
+    print(""String is empty"")
+else:
+    print(""String is not empty"")
+",,
+Split ,"String myString = ""Hello, World!""
+
+// Splitting based on space
+String[] splitResult = myString.split("" "");
+
+for (String s : splitResult) {
+    System.out.println(s);
+}
+// Output:
+// Hello,
+// World!
+","my_string = ""Hello, World!""
+
+# Splitting based on whitespace (default)
+split_result = my_string.split()
+
+print(split_result)
+# Output: ['Hello,', 'World!']",,You can pass in a custom delimiter as the argument to the `split()` method.
+Replace,"String myString = ""Hello, World!"";
+
+// Replace 'Hello' with 'Hi'
+String newString = myString.replace(""Hello"", ""Hi"");
+
+System.out.println(newString);
+// Output: Hi, World!","my_string = ""Hello, World!""
+
+# Replace 'Hello' with 'Hi'
+new_string = my_string.replace('Hello', 'Hi')
+
+print(new_string)
+# Output: Hi, World!
+",,
+Join,"String[] myArray = {""Hello"", ""World"", ""!""};
+String resultString = String.join("" "", myArray);
+
+System.out.println(resultString);
+Output: Hello World !","my_list = [""Hello"", ""World"", ""!""]
+
+# Joining elements with a space as the separator
+result_string = "" "".join(my_list)
+
+print(result_string)
+# Output: Hello World !
+",,
+Trimming Whitespace,"String text = ""   Hello, World!   "";
+String result = text.trim();
+","text = ""   Hello, World!   ""
+result = text.strip()
+
+",,

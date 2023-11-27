@@ -1,0 +1,43 @@
+question,javaSolution,pythonSolution
+"Create a dictionary and perform the following operations:
+
+Initialize a dictionary with at least three key-value pairs.
+Access and print the value associated with a specific key.","Map<String, Object> myMap = new HashMap<>();
+myMap.put(""name"", ""Alice"");
+myMap.put(""age"", 25);
+myMap.put(""city"", ""Wonderland"");
+
+System.out.println(""Age: "" + myMap.get(""age""));","my_dict = {'name': 'Alice', 'age': 25, 'city': 'Wonderland'}
+
+print(""Age:"", my_dict['age'])"
+"Create a dictionary and perform the following operations:
+
+Add a new key-value pair to the dictionary.
+Update the value of an existing key.
+Print the updated dictionary.","myMap.put(""gender"", ""Female"");
+myMap.put(""age"", 26);  // Update age
+
+System.out.println(""Updated Map: "" + myMap);","my_dict['gender'] = 'Female'
+my_dict['age'] = 26  # Update age
+
+print(""Updated Dictionary:"", my_dict)"
+"Create a dictionary and perform the following operations:
+
+Remove an entry with using its key.
+
+Print the dictionary after removal.","myMap.remove(""city"");
+
+System.out.println(""Map after removal: "" + myMap);
+","my_dict.pop('city', None)
+
+print(""Dictionary after removal:"", my_dict)
+"
+"Create a dictionary and perform the following operations:
+
+Check if the key 'country' exists.","boolean keyExists = myMap.containsKey(""country"");
+
+System.out.println(""Does 'country' key exist? "" + keyExists);
+","key_exists = 'country' in my_dict
+
+print(""Does 'country' key exist?"", key_exists)
+"

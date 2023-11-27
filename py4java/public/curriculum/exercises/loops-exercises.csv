@@ -1,0 +1,57 @@
+question,javaSolution,pythonSolution
+Use a `while` loop to print a countdown from 5 to 1.,"for (int i = 1; i <= 5; i++) {
+      System.out.println(i);
+}","counter = 5
+
+while counter > 0:
+    print(counter)
+    counter -= 1"
+"Write a program to reverse a given string.
+Use a for loop to iterate through the characters in reverse order.","String originalString = ""Java"";
+StringBuilder reversedString = new StringBuilder();
+
+for (int i = originalString.length() - 1; i >= 0; i--) {
+      reversedString.append(originalString.charAt(i));
+}
+
+System.out.println(""Original String: "" + originalString);
+System.out.println(""Reversed String: "" + reversedString.toString());","original_string = ""Python""
+reversed_string = """"
+
+for char in reversed(original_string):
+    reversed_string += char
+
+print(""Original String:"", original_string)
+print(""Reversed String:"", reversed_string)"
+"Use nested `for` loops to print the following pattern:
+
+*
+**
+***
+****
+*****","for (int i = 1; i <= 5; i++) {
+      for (int j = 1; j <= i; j++) {
+           System.out.print(""*"");
+       }
+       System.out.println();
+}","for i in range(1, 6):
+    for j in range(i):
+        print(""*"", end="""")
+    print()"
+"Write a program to calculate the factorial of a number taken as input.
+Use a for loop to perform the calculation.","Scanner scanner = new Scanner(System.in);
+System.out.print(""Enter a number: "");
+int number = scanner.nextInt();
+int factorial = 1;
+
+for (int i = 1; i <= number; i++) {
+      factorial *= i;
+}
+
+System.out.println(""The factorial of "" + number + "" is "" + factorial + ""."");","number = int(input(""Enter a number: ""))
+factorial = 1
+
+for i in range(1, number + 1):
+    factorial *= i
+
+print(f""The factorial of {number} is {factorial}."")"
