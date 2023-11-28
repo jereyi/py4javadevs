@@ -5,7 +5,13 @@ import path from "path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const lessonFiles = ["java.java", "javaNote.md", "python.py", "pythonNote.md", "topic.txt"]
+const lessonFiles = [
+  "java.java",
+  "javaNote.md",
+  "python.py",
+  "pythonNote.md",
+  "topic.txt",
+];
 const exerciseFiles = ["question.md", "java.java", "python.py"];
 
 async function parseFiles(lessonName, isLesson = true) {
@@ -18,7 +24,8 @@ async function parseFiles(lessonName, isLesson = true) {
 
   console.log(pathToFolder);
   const results = [];
-  const subFolders = await promises.readdir(pathToFolder);
+  let subFolders = await promises.readdir(pathToFolder);
+  subFolders.sort((a, b) => Number.parseInt(a) - Number.parseInt(b));
   console.log("Subfolders:", subFolders);
   for (let i = 0; i < subFolders.length; i++) {
     let data = {};
@@ -34,13 +41,11 @@ async function parseFiles(lessonName, isLesson = true) {
       );
       data[attributeName] = fileContents;
     }
-    console.log("data", data);
     results.push(data);
   }
 
   return results;
 }
-
 
 export default {
   parseFiles,

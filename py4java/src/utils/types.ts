@@ -1,7 +1,9 @@
 export type LessonDetail = {
     title: string;
     desc: string;
+    prev: string | null;
     next: string | null;
+    hasExercises: boolean;
 }
 
 export type LessonContextType = {

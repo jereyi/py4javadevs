@@ -14,6 +14,7 @@ import {
 import {
   InformationCircleIcon,
   ArrowSmallRightIcon,
+  ArrowSmallLeftIcon,
 } from "@heroicons/react/24/solid";
 import { Table } from "flowbite-react";
 import { Popover } from "@headlessui/react";
@@ -37,10 +38,11 @@ type CurriculumRow = {
 const popoverStyles = {
   button: "ml-4 focus:outline-none focus-visible:outline-none",
   icon: "h-8 w-8 text-white hover:opacity-50",
-  parent: "absolute z-10 mt-3 w-64",
+  parent: "absolute z-50 mt-3 w-64",
   child:
-    "relative overflow-hidden rounded-lg left-8 -top-10 border-black border-2",
-  inner: "bg-white p-5 whitespace-pre-wrap text-base text-gray-900",
+    "relative overflow-auto z-50 rounded-lg left-8 -top-10 border-black border-2",
+  inner:
+    "bg-white overflow-auto p-5 z-50 whitespace-pre-wrap text-base text-gray-900",
 };
 
 const Lesson = () => {
@@ -128,15 +130,14 @@ const Lesson = () => {
         draggable
         pauseOnHover
       />
-      <div className="p-16 flex flex-col items-center">
+      <div className="px-48 py-16 flex flex-col items-center">
         {isComplete && (
           <div className="text-white font-cal text-2xl bg-sage py-2 px-32 mb-4 rounded-lg border-white border-2">
-            {" "}
-            Complete{" "}
+            Complete
           </div>
         )}
-        <div className="mb-8 rounded-lg border-2 border-black">
-          <Table className="w-max text-left bg-dim-gray text-white ">
+        <div className="mb-8 mx-8 rounded-lg border-2 border-black">
+          <Table className="text-left bg-dim-gray text-white table-fixed">
             <caption className="p-5 text-4xl font-semibold font-cal text-left bg-dim-gray border-black text-white">
               {details?.title}
               <p className="mt-6 text-xl font-normal font-sans">
@@ -146,13 +147,13 @@ const Lesson = () => {
             <Table.Head className="text-xl">
               <Table.HeadCell
                 scope="col"
-                className="px-6 py-3 w-[20%] bg-dim-gray text-white border-y-2 border-black"
+                className="px-6 py-3 w-[15%] bg-dim-gray text-white border-y-2 border-black"
               >
                 Topic
               </Table.HeadCell>
               <Table.HeadCell
                 scope="col"
-                className="px-6 py-3 w-[40%] bg-dim-gray text-white border-y-2 border-black"
+                className="px-6 py-3 w-[45%] bg-dim-gray text-white border-y-2 border-black"
               >
                 Java
               </Table.HeadCell>
@@ -166,108 +167,96 @@ const Lesson = () => {
             <Table.Body>
               {rows.map((row, i) => (
                 <Table.Row
-                  className="border-black border-b-2 text-xl"
+                  className="border-black border-b-2"
                   key={`row-${i}`}
                 >
-                  <Table.Cell scope="row" className="px-6 py-4">
-                    <div className="pl-3">
-                      <div className="font-semibold whitespace-normal">
+                  <Table.Cell scope="row" className="px-6 py-4 w-[15%]">
+                    <div className="">
+                      <div className="font-semibold whitespace-normal text-xl">
                         {row.topic}
                       </div>
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="px-6 py-4 whitespace-pre-wrap">
-                    <div className="flex items-center min-w-max">
-                      <SyntaxHighlighter
-                        style={prism}
-                        className="rounded-md border-2 border-black"
-                        children={row.java || ""}
-                        language="java"
-                      />
-                      {row.javaNote && (
-                        <Popover className="relative">
-                          {({ open }) => (
-                            <>
-                              <Popover.Button className={popoverStyles.button}>
-                                <InformationCircleIcon
-                                  className={popoverStyles.icon}
-                                ></InformationCircleIcon>
-                              </Popover.Button>
-                              <Popover.Panel className={popoverStyles.parent}>
-                                <div className={popoverStyles.child}>
-                                  <div className={popoverStyles.inner}>
-                                    <Markdown
-                                      className={"whitespace-pre-wrap"}
-                                      children={row.javaNote ?? ""}
-                                      components={{
-                                        code({ children }) {
-                                          return (
-                                            <SyntaxHighlighter
-                                              style={prism}
-                                              className="rounded-md border-2 border-black"
-                                              children={String(
-                                                children
-                                              ).replace(/\n$/, "")}
-                                              language="java"
-                                            />
-                                          );
-                                        },
-                                      }}
-                                    />
+                  <Table.Cell className="px-6 py-4 whitespace-pre-wrap w-[45%] text-base">
+                    <div className="flex items-center">
+                      <div className="w-[85%]">
+                        {row.java && (
+                          <SyntaxHighlighter
+                            style={prism}
+                            className="rounded-md border-2 border-black"
+                            children={row.java}
+                            language="java"
+                          />
+                        )}
+                      </div>
+                      <div className="w-[15%]">
+                        {row.javaNote && (
+                          <Popover className="relative">
+                            {({ open }) => (
+                              <>
+                                <Popover.Button
+                                  className={popoverStyles.button}
+                                >
+                                  <InformationCircleIcon
+                                    className={popoverStyles.icon}
+                                  ></InformationCircleIcon>
+                                </Popover.Button>
+                                <Popover.Panel className={popoverStyles.parent}>
+                                  <div className={popoverStyles.child}>
+                                    <div className={popoverStyles.inner}>
+                                      <Markdown
+                                        className={"whitespace-pre-wrap"}
+                                        children={row.javaNote ?? ""}
+                                      />
+                                    </div>
                                   </div>
-                                </div>
-                              </Popover.Panel>
-                            </>
-                          )}
-                        </Popover>
-                      )}
+                                </Popover.Panel>
+                              </>
+                            )}
+                          </Popover>
+                        )}
+                      </div>
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="pl-6 py-4 whitespace-pre-wrap pr-20">
-                    <div className="flex items-center min-w-max">
-                      <SyntaxHighlighter
-                        style={prism}
-                        className="rounded-md border-2 border-black w-full h-full"
-                        children={row.python || ""}
-                        language="python"
-                      />
-                      {row.pythonNote && (
-                        <Popover className="relative">
-                          {({ open }) => (
-                            <>
-                              <Popover.Button className={popoverStyles.button}>
-                                <InformationCircleIcon
-                                  className={popoverStyles.icon}
-                                ></InformationCircleIcon>
-                              </Popover.Button>
-                              <Popover.Panel className={popoverStyles.parent}>
-                                <div className={popoverStyles.child}>
-                                  <div className={popoverStyles.inner}>
-                                    <Markdown
-                                      className={"whitespace-pre-wrap"}
-                                      children={row.pythonNote ?? ""}
-                                      components={{
-                                        code({ children }) {
-                                          return (
-                                            <SyntaxHighlighter
-                                              style={prism}
-                                              className="rounded-md border-2 border-black"
-                                              children={String(
-                                                children
-                                              ).replace(/\n$/, "")}
-                                              language="python"
-                                            />
-                                          );
-                                        },
-                                      }}
-                                    />
+                  <Table.Cell className="pl-6 py-4 whitespace-pre-wrap w-[40%] text-base">
+                    <div className="flex items-center">
+                      <div className="w-[85%]">
+                        {row.python && (
+                          <SyntaxHighlighter
+                            style={prism}
+                            className="rounded-md border-2 border-black w-full h-full"
+                            children={row.python!}
+                            language="python"
+                          />
+                        )}
+                      </div>
+                      <div className="w-[15%]">
+                        {row.pythonNote && (
+                          <Popover className="relative">
+                            {({ open }) => (
+                              <>
+                                <Popover.Button
+                                  className={popoverStyles.button}
+                                >
+                                  <InformationCircleIcon
+                                    className={popoverStyles.icon}
+                                  ></InformationCircleIcon>
+                                </Popover.Button>
+                                <Popover.Panel className={popoverStyles.parent}>
+                                  <div className={popoverStyles.child}>
+                                    <div className={popoverStyles.inner}>
+                                      <Markdown
+                                        className={"whitespace-pre-wrap"}
+                                        children={row.pythonNote!}
+                                      />
+                                    </div>
                                   </div>
-                                </div>
-                              </Popover.Panel>
-                            </>
-                          )}
-                        </Popover>
-                      )}
+                                </Popover.Panel>
+                              </>
+                            )}
+                          </Popover>
+                        )}
+                      </div>
                     </div>
                   </Table.Cell>
                 </Table.Row>
@@ -275,16 +264,30 @@ const Lesson = () => {
             </Table.Body>
           </Table>
         </div>
-        <button
-          className="mt-4 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
-          onClick={() => navigate(`/exercise/${title}/q1`)}
-        >
-          Go to Practice Exercises
-        </button>
+
+        {details?.hasExercises && (
+          <button
+            className="mt-4 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+            onClick={() => navigate(`/exercise/${title}/q1`)}
+          >
+            Go to Practice Exercises
+          </button>
+        )}
         <div className="flex w-full justify-end">
+          {details?.prev && (
+            <button
+              className="mt-16 flex items-center border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+              onClick={() =>
+                navigate(`/lesson/${titleToFileName(details.prev!)}`)
+              }
+            >
+              <ArrowSmallLeftIcon className="h-6 w-6 mr-2"></ArrowSmallLeftIcon>
+              Prev
+            </button>
+          )}
           <button
             disabled={isLoading}
-            className="mt-16 mr-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+            className="mt-16 mx-8 border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
             onClick={() => handleMarkLesson()}
           >
             {isLoading
@@ -295,12 +298,12 @@ const Lesson = () => {
           </button>
           {details?.next && (
             <button
-              className="mt-16 flex border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+              className="mt-16 flex items-center border-2 border-black z-10 text-lg rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
               onClick={() =>
                 navigate(`/lesson/${titleToFileName(details.next!)}`)
               }
             >
-              Next{" "}
+              Next
               <ArrowSmallRightIcon className="h-6 w-6 ml-2"></ArrowSmallRightIcon>
             </button>
           )}
