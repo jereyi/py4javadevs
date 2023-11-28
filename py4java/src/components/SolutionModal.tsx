@@ -17,7 +17,7 @@ const SolutionModal = (props: { isOpen: boolean, setIsOpen: React.Dispatch<React
         <Modal.Body className='w-full'>
           <div className="w-full bg-battleship-gray p-4 rounded-md border-2 border-black">
             <code className="text-base leading-relaxed text-white w-full">
-             {isJava ? props.exercise?.javaSolution : props.exercise?.pythonSolution }
+             {isJava ? props.exercise?.java : props.exercise?.python }
             </code>
           </div>
         </Modal.Body>

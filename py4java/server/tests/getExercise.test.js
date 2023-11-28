@@ -1,23 +1,43 @@
-import 'openai/shims/node'
+import "openai/shims/node";
 import request from "supertest";
 import app from "../index.js";
-import parser from "../utils/parser.util.js";
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
 describe("get-exercise route", function () {
   describe("GET /", function () {
     it("Should return the specified exercise", async function () {
       const urlParams = {
-        title: "variables",
+        title: "testing",
       };
       const response = await getExercise(urlParams);
 
-      const expectedLesson = await parser.csvToArray(
-        "exercises/variables-exercises.csv"
-      );
+      const expectedExercise = [
+        {
+          question: "Test Question\n",
+          java:
+            "public class Solution {\n" +
+            "\n" +
+            "  public static void main(String[] args) {\n" +
+            '    String test = "This is a test.";\n' +
+            "  }\n" +
+            "}\n",
+          python: 'test = "This is a test."\n',
+        },
+        {
+          question: "Another Test Question\n",
+          java:
+            "public class Solution {\n" +
+            "\n" +
+            "  public static void main(String[] args) {\n" +
+            '    String test = "This is another test.";\n' +
+            "  }\n" +
+            "}\n",
+          python: 'test = "This is another test."\n',
+        },
+      ];
 
       // eslint-disable-next-line jest/valid-expect
-      expect(response.body).toStrictEqual(expectedLesson);
+      expect(response.body).toStrictEqual(expectedExercise);
     });
 
     it("Should fail if exercise does not exists", async function () {

@@ -1,9 +1,9 @@
 import parser from '../utils/parser.util.js';
 
 export async function getExerciseByTitle(title){
-  return await parser.csvToArray(`exercises/${title}-exercises.csv`);
+  return await parser.parseFiles(title, false);
 }
 
 export async function getLessonByTitle(title){
-  return await parser.csvToArray(`${title}.csv`);
+  return await parser.parseFiles(title);
 }

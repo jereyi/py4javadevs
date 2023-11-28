@@ -1,29 +1,47 @@
 // Reading the file using default
 // fs npm package
-import { createReadStream } from "node:fs";
+import { promises } from "node:fs";
 import path from "path";
 import { fileURLToPath } from "node:url";
-import csv from 'csv-parser';
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const lessonFiles = ["java.java", "javaNote.md", "python.py", "pythonNote.md", "topic.txt"]
+const exerciseFiles = ["question.md", "java.java", "python.py"];
 
-function csvToArray(filename) {
-  const results = []
-  return new Promise((resolve, reject) => createReadStream(
-    path.resolve(__dirname, `../../public/curriculum/${filename}`)
-  ).on('error', error => {
-    reject(error);
-})
-    .pipe(csv())
-    .on("data", (data) => {
-      results.push(data);
-    })
-    .on("end", () => {
-      // Now, the 'results' array contains the parsed CSV data
-      resolve(results);
-    }));
+async function parseFiles(lessonName, isLesson = true) {
+  const pathToFolder = path.resolve(
+    __dirname,
+    `../../public/curriculum/${lessonName}/${isLesson ? "lesson" : "exercises"}`
+  );
+
+  const files = isLesson ? lessonFiles : exerciseFiles;
+
+  console.log(pathToFolder);
+  const results = [];
+  const subFolders = await promises.readdir(pathToFolder);
+  console.log("Subfolders:", subFolders);
+  for (let i = 0; i < subFolders.length; i++) {
+    let data = {};
+    for (let j = 0; j < files.length; j++) {
+      console.log(
+        "Path to file: ",
+        `${pathToFolder}/${subFolders[i]}/${files[j]}`
+      );
+      const attributeName = files[j].split(".")[0];
+      const fileContents = await promises.readFile(
+        `${pathToFolder}/${subFolders[i]}/${files[j]}`,
+        "utf-8"
+      );
+      data[attributeName] = fileContents;
+    }
+    console.log("data", data);
+    results.push(data);
+  }
+
+  return results;
 }
 
+
 export default {
-  csvToArray,
+  parseFiles,
 };

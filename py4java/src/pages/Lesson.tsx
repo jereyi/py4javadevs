@@ -6,6 +6,11 @@ import {
   capitalizeText,
   showSuccessToast,
 } from "../utils/general";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import {
+  materialDark,
+  prism,
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import {
   InformationCircleIcon,
   ArrowSmallRightIcon,
@@ -30,8 +35,8 @@ type CurriculumRow = {
 };
 
 const popoverStyles = {
-  button: "mr-4 focus:outline-none focus-visible:outline-none",
-  icon: "h-6 w-6 text-white hover:opacity-50",
+  button: "ml-4 focus:outline-none focus-visible:outline-none",
+  icon: "h-8 w-8 text-white hover:opacity-50",
   parent: "absolute z-10 mt-3 w-64",
   child:
     "relative overflow-hidden rounded-lg left-8 -top-10 border-black border-2",
@@ -50,7 +55,7 @@ const Lesson = () => {
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
 
   useEffect(() => {
@@ -172,22 +177,43 @@ const Lesson = () => {
                     </div>
                   </Table.Cell>
                   <Table.Cell className="px-6 py-4 whitespace-pre-wrap">
-                    <div className="flex items-start min-w-max">
+                    <div className="flex items-center min-w-max">
+                      <SyntaxHighlighter
+                        style={prism}
+                        className="rounded-md border-2 border-black"
+                        children={row.java || ""}
+                        language="java"
+                      />
                       {row.javaNote && (
                         <Popover className="relative">
                           {({ open }) => (
                             <>
-                              <Popover.Button
-                                className={
-                                  "mr-4 focus:outline-none focus-visible:outline-none"
-                                }
-                              >
-                                <InformationCircleIcon className="h-6 w-6 text-mustard hover:text-opacity-75"></InformationCircleIcon>
+                              <Popover.Button className={popoverStyles.button}>
+                                <InformationCircleIcon
+                                  className={popoverStyles.icon}
+                                ></InformationCircleIcon>
                               </Popover.Button>
                               <Popover.Panel className={popoverStyles.parent}>
                                 <div className={popoverStyles.child}>
-                                  <div>
-                                    <Markdown>{row.javaNote ?? ""}</Markdown>
+                                  <div className={popoverStyles.inner}>
+                                    <Markdown
+                                      className={"whitespace-pre-wrap"}
+                                      children={row.javaNote ?? ""}
+                                      components={{
+                                        code({ children }) {
+                                          return (
+                                            <SyntaxHighlighter
+                                              style={prism}
+                                              className="rounded-md border-2 border-black"
+                                              children={String(
+                                                children
+                                              ).replace(/\n$/, "")}
+                                              language="java"
+                                            />
+                                          );
+                                        },
+                                      }}
+                                    />
                                   </div>
                                 </div>
                               </Popover.Panel>
@@ -195,11 +221,16 @@ const Lesson = () => {
                           )}
                         </Popover>
                       )}
-                      <code>{row.java}</code>
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="px-6 py-4 whitespace-pre-wrap">
-                    <div className="flex items-start min-w-max">
+                  <Table.Cell className="pl-6 py-4 whitespace-pre-wrap pr-20">
+                    <div className="flex items-center min-w-max">
+                      <SyntaxHighlighter
+                        style={prism}
+                        className="rounded-md border-2 border-black w-full h-full"
+                        children={row.python || ""}
+                        language="python"
+                      />
                       {row.pythonNote && (
                         <Popover className="relative">
                           {({ open }) => (
@@ -212,7 +243,24 @@ const Lesson = () => {
                               <Popover.Panel className={popoverStyles.parent}>
                                 <div className={popoverStyles.child}>
                                   <div className={popoverStyles.inner}>
-                                    <Markdown>{row.pythonNote ?? ""}</Markdown>
+                                    <Markdown
+                                      className={"whitespace-pre-wrap"}
+                                      children={row.pythonNote ?? ""}
+                                      components={{
+                                        code({ children }) {
+                                          return (
+                                            <SyntaxHighlighter
+                                              style={prism}
+                                              className="rounded-md border-2 border-black"
+                                              children={String(
+                                                children
+                                              ).replace(/\n$/, "")}
+                                              language="python"
+                                            />
+                                          );
+                                        },
+                                      }}
+                                    />
                                   </div>
                                 </div>
                               </Popover.Panel>
@@ -220,7 +268,6 @@ const Lesson = () => {
                           )}
                         </Popover>
                       )}
-                      <code> {row.python} </code>
                     </div>
                   </Table.Cell>
                 </Table.Row>

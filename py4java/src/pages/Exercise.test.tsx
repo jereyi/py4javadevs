@@ -166,7 +166,7 @@ describe("Exercise Page", () => {
     expect(solutionModal).toHaveTextContent("Python");
 
     const solution = await screen.findByText(
-      VARIABLES_EXERCISE_RESPONSE[0].javaSolution
+      VARIABLES_EXERCISE_RESPONSE[0].java
     );
 
     expect(solution).toBeVisible();
@@ -187,14 +187,14 @@ describe("Exercise Page", () => {
 
     fireEvent.click(pythonButton);
 
-    const pythonSolution = await screen.findByText(
-      VARIABLES_EXERCISE_RESPONSE[0].pythonSolution
+    const python = await screen.findByText(
+      VARIABLES_EXERCISE_RESPONSE[0].python
     );
-    const javaSolution = screen.queryByText(
-      VARIABLES_EXERCISE_RESPONSE[0].javaSolution
+    const java = screen.queryByText(
+      VARIABLES_EXERCISE_RESPONSE[0].java
     );
-    expect(pythonSolution).toBeVisible();
-    expect(javaSolution).toBeNull();
+    expect(python).toBeVisible();
+    expect(java).toBeNull();
   });
 
   //

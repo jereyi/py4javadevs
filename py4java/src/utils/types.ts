@@ -37,8 +37,8 @@ export type OutputDetail = {
 
 export type ExerciseDetail = {
     question: string;
-    javaSolution: string;
-    pythonSolution: string;
+    java: string;
+    python: string;
   }
 
 export type UserInfo = {

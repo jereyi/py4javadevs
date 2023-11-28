@@ -2,13 +2,13 @@ export const VARIABLES_EXERCISE_RESPONSE = [
     {
       question:
         "Create a variable named `carname` and assign the value `Volvo` to it.",
-      javaSolution: 'String carname = "Volvo";',
-      pythonSolution: "carname = 'Volvo'",
+      java: 'String carname = "Volvo";',
+      python: "carname = 'Volvo'",
     },
     {
       question: "Create a variable named `x` and assign the value `50` to it.",
-      javaSolution: "int x = 50;",
-      pythonSolution: "x = 50",
+      java: "int x = 50;",
+      python: "x = 50",
     },
   ];
 

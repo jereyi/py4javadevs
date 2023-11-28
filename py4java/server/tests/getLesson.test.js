@@ -9,11 +9,38 @@ describe("get-lesson route", function () {
   describe("GET /", function () {
     it("Should return the specified lesson", async function () {
       const urlParams = {
-        title: "variables",
+        title: "testing",
       };
       const response = await getLesson(urlParams);
 
-      const expectedLesson = await parser.csvToArray("variables.csv");
+      const expectedLesson = [
+        {
+          java:
+            "public class Main {\n" +
+            "\n" +
+            "  public static void main(String[] args) {\n" +
+            '    String test = "This is a test.";\n' +
+            "  }\n" +
+            "}\n",
+          javaNote: "This is a `test`.",
+          python: 'test = "This is another test."\n',
+          pythonNote: "`This` is a test.",
+          topic: "Test 1",
+        },
+        {
+          java:
+            "public class Main {\n" +
+            "\n" +
+            "  public static void main(String[] args) {\n" +
+            '    String test = "This is another test.";\n' +
+            "  }\n" +
+            "}\n",
+          javaNote: "This is `another` test.",
+          python: 'test = "This is another test."\n',
+          pythonNote: "This is another test.",
+          topic: "Test 2",
+        },
+      ];
 
       // eslint-disable-next-line jest/valid-expect
       expect(response.body).toStrictEqual(expectedLesson);
