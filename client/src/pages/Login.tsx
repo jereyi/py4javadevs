@@ -3,7 +3,7 @@ import { customButtonStyle } from "../utils/styles";
 const Login = () => {
   const handleLogin = () => {
     const redirectUrl =
-      "https://fed.princeton.edu/cas/login?service=http://localhost:3001/auth/verify";
+      `https://fed.princeton.edu/cas/login?service=${process.env.SERVER_URL}/auth/verify`;
     window.location.replace(redirectUrl);
   };
   return (
