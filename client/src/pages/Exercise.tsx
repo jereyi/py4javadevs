@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
 import OutputWindow from "../components/OutputWindow";
-import { Tooltip } from "flowbite-react";
 import CustomInput from "../components/CustomInput";
 import ThemeDropdown from "../components/ThemeDropdown";
 import LanguagesDropdown from "../components/LanguagesDropdown";

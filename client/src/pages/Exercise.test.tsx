@@ -7,7 +7,7 @@ import {
 import App from "../App";
 import { FetchResolver } from "../utils/fetchResolver";
 import { CasUserContext } from "../context/casUserContext";
-import { OutputDetail, UserInfo } from "../utils/types";
+import { UserInfo } from "../utils/types";
 import { VARIABLES_EXERCISE_RESPONSE } from "../utils/testing";
 import axios from "axios";
 

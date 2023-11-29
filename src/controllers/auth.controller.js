@@ -33,7 +33,7 @@ export async function verify(req, res) {
 
     // Check if the user's ticket is valid
     await cas.validate(ticket, function (err, status, netid) {
-      if (err) {
+      if (err || !status) {
         console.log("Error in cas validation: " + JSON.stringify(err));
         res.error(err).status(500);
         return;
@@ -54,8 +54,8 @@ export async function verify(req, res) {
 }
 
 export async function getUser(req, res) {
-  console.log("CAS " + req.session.cas);
-  if (req.session.cas) {
+  console.log("CAS " + JSON.stringify(req.session.cas));
+  if (req.session.cas?.netid) {
     console.log("CAS Session exists");
     const user = await getUserByNetid(req.session.cas.netid);
     console.log("user " + JSON.stringify(user));

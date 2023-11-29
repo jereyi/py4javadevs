@@ -58,7 +58,7 @@ app.use((err, req, res, next) => {
     return;
 });
 
-
+console.log(process.env);
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 }

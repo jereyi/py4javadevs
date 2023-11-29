@@ -79,7 +79,6 @@ describe("Lesson Page", () => {
 
         const completeBanner = await screen.findByText("Complete");
         const title = await screen.findByText(/variables/i);
-      screen.logTestingPlaygroundURL();
       const description = await screen.findByText(nameToDetailsMap.get("variables")!.desc);
       const cells = screen.getAllByRole('cell');
         const topicCell = cells[0];
