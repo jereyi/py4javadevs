@@ -1,0 +1,14 @@
+topic,java,python,javaNote,pythonNote
+Printing a string,"System.out.println(""Hello World!"");","print(""Hello, World!"")",,
+Printing a variable's value ,"int x = 42;
+System.out.println(""The value of x is: "" + x);","print(""The value of x is:"", x)",,
+Printing multiple values with custom formatting ,"String name = ""Alice"";
+int age = 30;
+System.out.println(""Name: "" + name + "", Age: "" + age);","name = ""Alice"" 
+age = 30 
+print(f""Name: {name}, Age: {age}"")",,
+Printing to standard error,"System.err.println(""Error!"");","import sys
+
+print(""Error!"", file=sys.stderr)",,
+Printing with a custom separator,,"print(""Hello"", ""World"", separator="", "") # prints Hello, World ",,"`"" ""` by default."
+Printing with a custom terminator,,"print(""Hello"", ""World"", end=""!"") # prints Hello World! ",,"`""\n""` by default."

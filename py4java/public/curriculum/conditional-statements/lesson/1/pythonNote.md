@@ -1,1 +1,0 @@
-Recall that, in Python, code blocks are defined by indentation. 

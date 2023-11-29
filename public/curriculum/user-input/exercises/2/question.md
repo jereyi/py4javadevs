@@ -1,0 +1,1 @@
+Write a program that takes a password as input and checks if it matches a predefined password.

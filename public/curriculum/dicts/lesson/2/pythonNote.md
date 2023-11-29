@@ -1,0 +1,1 @@
+The `update` method takes another `dict` as input.

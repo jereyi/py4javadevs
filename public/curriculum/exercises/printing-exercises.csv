@@ -1,0 +1,28 @@
+question,javaSolution,pythonSolution
+"Declare two variables, `x` and `y`, with numeric values. Print their values in a sentence.","public class Solution {
+    public static void main(String[] args) {
+        int x = 5;
+        int y = 8;
+        System.out.println(""The value of x is: "" + x);
+        System.out.println(""The value of y is: "" + y);
+    }
+}","x = 5
+y = 8
+print(""The value of x is:"", x)
+print(""The value of y is:"", y)"
+Declare a variable `name` with your name and print a message using a formatted string.,"public class Solution {
+    public static void main(String[] args) {
+        String name = ""Alice"";
+        System.out.println(""Hello, "" + name + ""! Welcome to Python.""
+    }
+}","name = ""Alice""
+print(f""Hello, {name}! Welcome to Python."")"
+"Declare two variables, `city` and `country`, and print them on the same line with a custom separator and terminator.","public class Solution {
+    public static void main(String[] args) {
+        String city = ""New York"";
+        String country = ""USA"";
+        System.out.print(city + "", "" + country + "".\n"");
+    }
+}","city = ""New York""
+country = ""USA""
+print(city, country, sep="", "", end="".\n"")"

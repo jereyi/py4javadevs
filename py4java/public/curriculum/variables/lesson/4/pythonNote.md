@@ -1,1 +1,0 @@
-The `Char` data type does not exist in Python.

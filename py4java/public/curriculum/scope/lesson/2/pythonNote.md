@@ -1,1 +1,0 @@
-If a function is nested inside another function, variables from the outer (enclosing) function are accessible.

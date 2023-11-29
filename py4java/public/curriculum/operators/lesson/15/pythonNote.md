@@ -1,1 +1,0 @@
-`x` is cast to type `float`.

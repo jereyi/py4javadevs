@@ -1,0 +1,104 @@
+topic,java,python,javaNote,pythonNote
+Arithmetic Operators,,,,
+Addition,int result = 10 + 5;,result = 10 + 5,,
+Unary Minus,"int result = 10 - 5;
+",result = 10 - 5,,
+Subtration,"int result = 10 - 5;
+",result = 10 - 5,,
+Multiplication,int result = 10 * 5,result = 10 * 5,,
+Division,double result = 10 / 5;  // result is 2.0 (double),result = 10 / 5  # result is 2.0 (float),,
+Integer Division,int result = 10 / 5; // result is 2 (int),result = 10 // 5  # result is 2 (int),,
+Modulus,int result = 10 % 3;  // result is 1,result = 10 % 3  # result is 1,,
+Exponentiation ,,result = 10 ** 3;  // result is 1000,,
+Assignment Operators,,,,
+Assignment,int x = 10;,x = 10,,
+Addition Assignment,x += 5;,x += 5 ,,
+Subtration Assignment,x -= 5;,x -= 5,,
+Multiplication Assignment,x *= 5;,x *= 5,,
+Division Assignment,x /= 5;,x /= 5,,`x` is cast to type `float`.
+Modulus Assignment,x %= 5;,x %= 5,,
+Integer Division Assignment,x /= 5;,x //= 5,,`x` remains type `int`.
+Exponention Assignment,,x **= 5,,
+Bitwise AND Assignment,x &= 5;,x &= 5,,
+Bitwise OR Assignment,x |= 5;,x |= 5,,
+XOR Assignment,x ^= 5;,x ^= 5,,
+Right-Shift Assignment,x >>= 5;,x >>= 5,,
+Left-Shift Assignment,x <<= 5;,x <<= 5,,
+Comparison Operators,,,,
+Equal,boolean result = 5 == 10;  // result is false,result = 5 == 10  # result is False,,
+Not equal,boolean result = 5 != 10;  // result is true,result = 5 != 10  # result is True,,
+Greater than,boolean result = 10 > 5;  // result is true,result = 10 > 5  # result is True,,
+Less than,boolean result = 5 < 10;  // result is true,result = 5 < 10  # result is True,,
+Greater than or equal to,boolean result = 10 >= 10;  // result is true,result = 10 >= 10  # result is True,,
+Less than or equal to,boolean result = 5 <= 10;  // result is true,result = 5 <= 10  # result is True,,
+Logical Operators,,,,
+Logical and,boolean result = true && false;  // result is false,result = True and False  # result is False,,
+Logical or,boolean result = true || false;  // result is true,result = True or False  # result is True,,
+Logical not,boolean result = !true;  // result is false,result = not True  # result is False,,
+,,,,
+Identity operators ,,,,
+is,,"string1 = ""Hello""
+string2 = ""Hello""
+result = string1 is string2  # These are the same string literal in memory
+print(result)  # True",,Returns `True` if both variables are the same object with same memory location
+is not,,"a = [1, 2, 3]
+b = [1, 2, 3]  # b is a different list, even though it has the same content
+result = a is not b
+print(result)  # True
+
+",,Returns `True` if both variables are not the same object with different memory locations
+Membership Operators ,,,,
+in,,"my_list = [1, 2, 3]
+element = 2
+result = element in my_list  # Check if element is in the list
+print(result)  # True",,"Returns `True` if a sequence with the specified value is present in the object
+
+Works for lists, strings, dicts, and sets"
+not in,,"my_list = [1, 2, 3]
+element = 4
+result = element not in my_list  # Check if element is not in the list
+print(result)  # True",,Returns `True` if a sequence with the specified value is not present in the object
+Bitwise Operators,,,,
+AND,"int x = 5;
+int y = 3;
+int result = x & y;  // result is 1
+","x = 5
+y = 3
+result = x & y  # result is 1",,
+OR,"int x = 5;
+int y = 3;
+int result = x | y;  // result is 7
+","x = 5
+y = 3
+result = x | y  # result is 7
+",,
+XOR,"int x = 5;
+int y = 3;
+int result = x ^ y;  // result is 6
+","x = 5
+y = 3
+result = x ^ y  # result is 6
+",,
+NOT,"int x = 5;
+int result = ~x;  // result is -6
+","x = 5
+result = ~x  # result is -6
+",,
+Left shift and Right Shift,"int x = 5;
+int result_left = x << 2;  // result_left is 20
+int result_right = x >> 1;  // result_right is 2
+","x = 5
+result_left = x << 2  # result_left is 20
+result_right = x >> 1  # result_right is 2
+",,
+Miscellaneous,,,,
+String concatenation,"String result = ""Hello "" + ""world!"";","result = ""Hello "" + ""world!""",,
+Ternary Operator,"int x = 10;
+int y = 5;
+int max_value = (x > y) ? x : y;
+System.out.println(max_value);  // Output: 10
+","x = 10
+y = 5
+max_value = x if x > y else y
+print(max_value)  # Output: 10
+",,

@@ -1,1 +1,0 @@
-Since the `char` type does not exist in Python, `first_char` and `last_char` are of type `str` (i.e. they are strings).

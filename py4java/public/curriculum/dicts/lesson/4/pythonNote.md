@@ -1,1 +1,0 @@
-The `del` keyword and the `pop` method both remove the element with the specified key. However, the `pop` method returns the element while `del` keyword does not.

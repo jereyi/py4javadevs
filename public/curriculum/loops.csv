@@ -1,0 +1,100 @@
+topic,java,python,javaNote,pythonNote
+While loop,"int count = 0;
+while (count < 3) {
+    System.out.println(count);
+    count++;
+}
+// Outputs:
+// 0
+// 1
+// 2","count = 0
+while count < 3:
+    print(count)
+    count += 1
+// Outputs:
+// 0
+// 1
+// 2",,
+For Loop,"for (int i = 0; i < 5; i++) {
+    System.out.println(i);
+}
+// Outputs:
+// 0
+// 1
+// 2","for i in range(5):
+    print(i)
+// Outputs:
+// 0
+// 1
+// 2",,"The `range(start, stop, step)` function in Python generates a sequence of numbers within a specified range starting from `start`, up to `stop'`(exclusive), with a specified `step` increment.
+
+`stop` and `step` are optional parameters."
+Nested For Loop,"for(int i = 0; i < 2; i++){
+    for(int j = 0; j < 2; j++){
+        System.out.println(i);
+        }
+          System.out.println();
+        }
+// Outputs:
+// 0
+// 1
+// 
+// 0
+// 1
+//","for i in range(2):
+      for j in range(2):
+            print(i)
+      print();
+// Outputs:
+// 0
+// 1
+// 
+// 0
+// 1
+//",,
+For-Each Loop,"int[] numbers = {1, 2, 3};
+for (int num : numbers) {
+    System.out.println(num);
+}
+// Outputs:
+// 1
+// 2
+// 3","numbers = [1, 2, 3]
+for num in numbers:
+    print(num)
+// Outputs:
+// 1
+// 2
+// 3",,
+Break Statement,"for (int i = 0; i < 10; i++) {
+    if (i == 3) {
+        break;
+    }
+    System.out.println(i);
+}
+// Outputs:
+// 0
+// 1
+// 2","for i in range(10):
+    if i == 3:
+        break
+    print(i)
+// Outputs:
+// 0
+// 1
+// 2",,
+Continue Statement,"for (int i = 0; i < 3; i++) {
+    if (i == 1) {
+        continue;
+    }
+    System.out.println(i);
+}
+// Outputs:
+// 0
+// 2","for i in range(3):
+    if i == 1:
+        continue
+    print(i)
+// Outputs:
+// 0
+// 2",,

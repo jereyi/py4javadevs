@@ -1,0 +1,1 @@
+In Python, the `input()` function is commonly used to read user input. It takes a string argument, which is the prompt displayed to the user, and returns the user's input as a string.

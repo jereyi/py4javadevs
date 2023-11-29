@@ -1,1 +1,0 @@
-Opening a File, Reading from a File, and Closing a File

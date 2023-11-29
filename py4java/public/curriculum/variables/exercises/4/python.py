@@ -1,1 +1,0 @@
-is_raining = False

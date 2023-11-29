@@ -1,1 +1,0 @@
-`x` remains type `int`.

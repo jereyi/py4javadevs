@@ -1,1 +1,0 @@
-Printing with a custom terminator

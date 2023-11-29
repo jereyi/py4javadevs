@@ -1,1 +1,0 @@
-A ternary operator is a concise shorthand for expressing a simple conditional statement in a single line, using the syntax `condition ? true_value : false_value`.

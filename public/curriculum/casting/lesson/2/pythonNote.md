@@ -1,0 +1,1 @@
+For explicit type conversion, you specify the data type you want to convert to using functions like `int()`, `float()`, `str()`, and others.

@@ -1,1 +1,0 @@
-Returns `True` if a sequence with the specified value is not present in the object

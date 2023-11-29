@@ -1,1 +1,0 @@
-This example uses streams which was introduced in Java 8. Do not worry if you are not familiar with this syntax. 

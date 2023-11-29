@@ -1,0 +1,1 @@
+Returns `True` if both variables are not the same object with different memory locations

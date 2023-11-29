@@ -1,0 +1,1 @@
+Python functions are not explicitly static but can be used similarly.

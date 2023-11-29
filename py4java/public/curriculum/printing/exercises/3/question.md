@@ -1,1 +1,0 @@
-Declare two variables, `city` and `country`, and print them on the same line with a custom separator and terminator.
