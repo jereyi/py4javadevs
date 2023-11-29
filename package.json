@@ -2,6 +2,9 @@
   "name": "py4java",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+      "node": "20.10.0"
+    },
   "dependencies": {
     "autoprefixer": "^10.4.16",
     "axios": "^1.5.1",
