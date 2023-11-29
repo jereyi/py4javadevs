@@ -1,4 +1,4 @@
-public class Solution {
+public class Main {
 
   public static void main(String[] args) {
     List<String> word_list = Arrays.asList(

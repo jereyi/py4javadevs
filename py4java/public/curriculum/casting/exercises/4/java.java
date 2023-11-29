@@ -1,4 +1,4 @@
-public class Solution {
+public class Main {
 
   public static void main(String[] args) {
     String strDouble = "3.14";

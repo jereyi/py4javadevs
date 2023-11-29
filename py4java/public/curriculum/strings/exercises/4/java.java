@@ -1,4 +1,4 @@
-public class Solution {
+public class Main {
 
   public static void main(String[] args) {
     String sentence = "Java programming is fun and versatile.";

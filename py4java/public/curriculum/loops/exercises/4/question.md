@@ -1,2 +1,3 @@
-Write a program to calculate the factorial of a number taken as input.
+Write a program to calculate the factorial of a number.
+
 Use a for loop to perform the calculation.

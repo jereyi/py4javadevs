@@ -5,10 +5,9 @@ import { nameToDetailsMap } from "../utils/constants";
 
 
 
-const Stats = () => {
-    const { user } = useContext(CasUserContext)!;
+const Stats = (props: {user: any}) => {
 
-    const lessonsCompleted = user?.completedLessons.filter((lesson: String) => nameToDetailsMap.has(lesson)).length;
+    const lessonsCompleted = props.user?.completedLessons.filter((lesson: String) => nameToDetailsMap.has(lesson)).length;
 
     return (
     <div className="flex justify-around max-h-[20%] bg-dim-gray border-black border-2">
@@ -16,7 +15,7 @@ const Stats = () => {
         <CalendarDaysIcon className="h-2/5 w-2/5"> </CalendarDaysIcon> 
         <div>
             <div> Date Joined  </div>
-            <div className="font-cal text-3xl"> {user?.lastLogin.toLocaleDateString(undefined, {
+            <div className="font-cal text-3xl"> {props.user?.lastLogin.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -27,7 +26,7 @@ const Stats = () => {
         <ChartBarIcon className="h-2/5 w-2/5"> </ChartBarIcon> 
         <div>
             <div> Lessons Completed</div>
-            <div className="font-cal text-3xl"> {lessonsCompleted === 1 ? "1 Lesson" : `${lessonsCompleted} Lessons`} </div>
+            <div className="font-cal text-3xl"> {`${lessonsCompleted}/${nameToDetailsMap.size} Lessons`} </div>
         </div>
         </div>
     </div>);

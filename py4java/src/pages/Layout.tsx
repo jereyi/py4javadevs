@@ -33,7 +33,7 @@ const Layout = () => {
 
   return (
     <>
-      {user && location.pathname !== "/login" ? (
+      {location.pathname !== "/login" ? (
         <nav className="bg-dim-gray border-gray-200 dark:bg-gray-900">
           <div className="max-w-screen-xl py-6 px-16">
               <span className="self-center text-3xl font-cal font-semibold whitespace-nowrap text-white cursor-pointer" onClick={() => navigate("/")}>

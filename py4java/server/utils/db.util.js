@@ -4,17 +4,18 @@ import  { pool } from "../db.cjs";
 export async function createUser(netid, displayName) {
   try {
     const response = await pool.query(
-      "INSERT INTO users (net_id, display_name) VALUES ($1, $2)",
+      "INSERT INTO users (net_id, display_name) VALUES ($1, $2) RETURNING *",
       [netid, displayName]
     );
     console.log(`Added a user with the netid ${netid}`);
-    return response;
+    return response.rows.at(0);
   } catch (error) {
     console.error("Error while creating user: " + error)
     return null;
   }
 }
 
+// The User Table has the following fields: net_id, display_name, last_login, completed_lessons
 export async function retrieveUser(netid) {
   try {
     const res = await pool.query("SELECT * FROM users WHERE net_id = ($1)", [netid]);

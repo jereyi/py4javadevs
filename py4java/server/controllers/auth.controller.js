@@ -58,18 +58,11 @@ export async function getUser(req, res) {
   if (req.session.cas) {
     console.log("CAS Session exists");
     const user = await getUserByNetid(req.session.cas.netid);
-    console.log("user " + user);
+    console.log("user " + JSON.stringify(user));
     if (user) {
       res.json(JSON.stringify(user));
       return;
     }
   } 
   res.status(404).send("User not found");
-}
-
-export async function logout(req, res) {
-  req.session = null;
-  res.redirect(
-    process.env.CAS_ENDPOINT + "/logout?url=" + process.env.SERVER_URL
-  );
 }

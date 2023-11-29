@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Solution {
+public class Main {
 
   public static void main(String[] args) {
     String sourceFilePath = "source.txt";

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import CodeEditorComponent from "../components/CodeEditorComponent";
 import axios from "axios";
 import { classnames, titleToFileName, wrappedText } from "../utils/general";
-import { languageOptions } from "../utils/constants";
+import { languageOptions, nameToDetailsMap } from "../utils/constants";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,10 +12,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
 import OutputWindow from "../components/OutputWindow";
+import { Tooltip } from "flowbite-react";
 import CustomInput from "../components/CustomInput";
 import ThemeDropdown from "../components/ThemeDropdown";
 import LanguagesDropdown from "../components/LanguagesDropdown";
-import { LanguageOption, OutputDetail, ThemeOption, ExerciseDetail} from "../utils/types";
+import {
+  LanguageOption,
+  OutputDetail,
+  ThemeOption,
+  ExerciseDetail,
+} from "../utils/types";
 import OutputDetails from "../components/OutputDetails";
 import SidebarComponent from "../components/SidebarComponent";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,10 +31,11 @@ import RecommendationModal from "../components/RecommendationModal";
 import Markdown from "react-markdown";
 import { showErrorToast, showSuccessToast } from "../utils/general";
 import { customButtonStyle } from "../utils/styles";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const Exercise = () => {
   const [code, setCode] = useState(languageOptions[0].default);
-  const [ lastAnalyzedCode, setLastAnalyzedCode ] = useState("");
+  const [lastAnalyzedCode, setLastAnalyzedCode] = useState("");
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState<OutputDetail | null>(null);
   const [processing, setProcessing] = useState<boolean>(false);
@@ -40,12 +47,15 @@ const Exercise = () => {
   });
   const [language, setLanguage] = useState(languageOptions[0]);
 
-  const [exercises, setExercises] = useState<Map<String, ExerciseDetail>>(new Map());
+  const [exercises, setExercises] = useState<Map<String, ExerciseDetail>>(
+    new Map()
+  );
 
   const [isOpenSolutionModal, setIsOpenSolutionModal] = useState(false);
-  const [isOpenRecommendationModal, setIsOpenRecommendationModal ] = useState(false);
+  const [isOpenRecommendationModal, setIsOpenRecommendationModal] =
+    useState(false);
 
-  const [ recommendation, setRecommendation ] = useState("");
+  const [recommendation, setRecommendation] = useState("");
 
   const { title, question } = useParams();
 
@@ -59,25 +69,25 @@ const Exercise = () => {
     let response;
     try {
       response = await fetch(`/get-exercise?title=${titleToFileName(title!)}`);
-      } catch (error) {
-        console.error("Error fetching exercise data");
-        navigate('/404')
-      }
+    } catch (error) {
+      console.error("Error fetching exercise data");
+      navigate("/404");
+    }
 
     if (response?.ok) {
-        response.json().then((data) => 
-        {
-          const exercisesMap = new Map<String, ExerciseDetail>();
-          (data as ExerciseDetail[]).forEach((exercise, i) => exercisesMap.set(`q${i + 1}`, exercise));
-          setExercises(exercisesMap);
-          if (!question || !exercises.has(question)) {
-            navigate(`/exercise/${titleToFileName(title!)}/q1`);
-          }
-        }
+      response.json().then((data) => {
+        const exercisesMap = new Map<String, ExerciseDetail>();
+        (data as ExerciseDetail[]).forEach((exercise, i) =>
+          exercisesMap.set(`q${i + 1}`, exercise)
         );
+        setExercises(exercisesMap);
+        if (!question || !exercises.has(question)) {
+          navigate(`/exercise/${titleToFileName(title!)}/q1`);
+        }
+      });
     } else {
-        console.error(`HTTP ${response?.status}: ${response?.text}`);
-        navigate('/404')
+      console.error(`HTTP ${response?.status}: ${response?.text}`);
+      navigate("/404");
     }
   };
 
@@ -85,24 +95,24 @@ const Exercise = () => {
     const codeCopy = code.slice();
     if (code.length === 0 || code === language.default) {
       showErrorToast("No code to analyze");
-      return
+      return;
     } else if (code === lastAnalyzedCode) {
       setIsOpenRecommendationModal(true);
-      return
+      return;
     }
 
     setLoading(true);
     setIsOpenRecommendationModal(true);
     try {
       // TODO: Add caching
-      const data = await fetch('/chat-gpt', {
-        method: 'POST',
-        credentials: 'same-origin',
+      const data = await fetch("/chat-gpt", {
+        method: "POST",
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({"code": codeCopy}),
-      }).then(res => res.json());
+        body: JSON.stringify({ code: codeCopy }),
+      }).then((res) => res.json());
       showSuccessToast("Fetched recommendations!");
       setLastAnalyzedCode(codeCopy);
       setRecommendation(data);
@@ -112,7 +122,7 @@ const Exercise = () => {
       setIsOpenRecommendationModal(false);
     }
     setLoading(false);
-  }
+  };
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
@@ -193,7 +203,7 @@ const Exercise = () => {
       });
   };
   const checkStatus = async (token: string) => {
-    console.log("Hit check status")
+    console.log("Hit check status");
     const options = {
       method: "GET",
       url: process.env.REACT_APP_RAPID_API_URL + "/" + token,
@@ -249,75 +259,125 @@ const Exercise = () => {
   }, []);
 
   return (
-    <div className="px-16">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <div className="flex flex-row justify-between">
-        <div className="flex">
-        <div className="px-4 py-2">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
-        </div>
-        <div className="px-4 py-2">
-          <ThemeDropdown onSelectChange={handleThemeChange} theme={theme} />
-        </div>
-        </div>
-        <div className="flex">
-          <button
-                  onClick={() => loading ? setIsOpenRecommendationModal(true) : fetchRecommendations()}
-                  className={customButtonStyle("flex whitespace-nowrap px-4 py-2 my-2 mr-4")}
-                >
-                  {loading ? "Loading..." : <><SparklesIcon className="w-6 h-6 mr-3"/> AI Analysis</> } 
-          </button>
-          <button
+    <div className="relative w-screen min-h-screen">
+      {exercises.size > 0 ? (
+        <div className="px-16">
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <div className="flex flex-row justify-between">
+            <div className="flex">
+              <div className="px-4 py-2">
+                <LanguagesDropdown onSelectChange={onSelectChange} />
+              </div>
+              <div className="px-4 py-2">
+                <ThemeDropdown
+                  onSelectChange={handleThemeChange}
+                  theme={theme}
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <button
+                onClick={() =>
+                  loading
+                    ? setIsOpenRecommendationModal(true)
+                    : fetchRecommendations()
+                }
+                className={customButtonStyle(
+                  "flex whitespace-nowrap px-4 py-2 my-2 mr-4"
+                )}
+              >
+                {loading ? (
+                  "Loading..."
+                ) : (
+                  <>
+                    <SparklesIcon className="w-6 h-6 mr-3" /> AI Analysis
+                  </>
+                )}
+              </button>
+              <button
                 onClick={() => setIsOpenSolutionModal(true)}
                 className={customButtonStyle("my-2 mr-4 px-4 py-2 ")}
               >
                 View Solutions
-        </button>
-        </div>
-      </div>
-      <div className="flex flex-row lg:gap-8 flex-wrap lg:flex-nowrap items-start px-4 py-4">
-        <SidebarComponent className="hidden xl:flex" title={title!} numExercises={exercises.size} currExercise={question!}/>
-        <div className="flex flex-col min-w-[50%] w-full h-full pb-16 justify-start items-end">
-          <CodeEditorComponent
-            code={code}
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
-          />
-        </div>
-        <div className="md:right-container flex min-w-[30%] w-full flex-col">
-          <div className="text-xl pb-8 hidden lg:block" data-testid="question">
-            <Markdown>{exercises.get(question!)?.question ?? ""}</Markdown>
+              </button>
+            </div>
           </div>
-          <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            <CustomInput
-              customInput={customInput}
-              setCustomInput={setCustomInput}
+          <div className="flex flex-row lg:gap-8 flex-wrap lg:flex-nowrap items-start px-4 py-4">
+            <SidebarComponent
+              className="hidden xl:flex"
+              title={title!}
+              numExercises={exercises.size}
+              currExercise={question!}
             />
+            <div className="flex flex-col min-w-[50%] w-full h-full pb-16 justify-start items-end">
+              <CodeEditorComponent
+                code={code}
+                onChange={onChange}
+                language={language?.value}
+                theme={theme.value}
+                readonly={loading}
+              />
+            </div>
+            <div className="md:right-container flex min-w-[30%] w-full flex-col">
+              <div
+                className="text-xl pb-8 hidden lg:block"
+                data-testid="question"
+              >
+                <Markdown>{exercises.get(question!)?.question ?? ""}</Markdown>
+              </div>
+              <OutputWindow outputDetails={outputDetails} />
+              <div className="flex flex-col items-end">
+                  <CustomInput
+                    customInput={customInput}
+                    setCustomInput={setCustomInput}
+                  />
+                <button
+                  onClick={handleCompile}
+                  disabled={
+                    code.length === 0 || code === language.default || processing
+                  }
+                  className={customButtonStyle("mt-4 px-4 py-2")}
+                >
+                  {processing ? "Processing..." : "Compile and Execute"}
+                </button>
+              </div>
+              {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+            </div>
+          </div>
+          <div className="flex justify-center pb-16">
             <button
-              onClick={handleCompile}
-              disabled={code.length === 0 || code === language.default || processing}
-              className={customButtonStyle("mt-4 px-4 py-2 ")}
+              className={customButtonStyle("mt-4 px-4 py-2 text-lg")}
+              onClick={() => navigate(`/lesson/${title}`)}
             >
-              {processing ? "Processing..." : "Compile and Execute"}
+              {`Return to ${nameToDetailsMap.get(title!)!.title} Lesson`}
             </button>
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+
+          <SolutionModal
+            isOpen={isOpenSolutionModal}
+            setIsOpen={setIsOpenSolutionModal}
+            exercise={exercises.get(question!)}
+          ></SolutionModal>
+          <RecommendationModal
+            isOpen={isOpenRecommendationModal}
+            setIsOpen={setIsOpenRecommendationModal}
+            recommendation={recommendation}
+            loading={loading}
+          ></RecommendationModal>
         </div>
-      </div>
-      <SolutionModal isOpen={isOpenSolutionModal} setIsOpen={setIsOpenSolutionModal} exercise={exercises.get(question!)}></SolutionModal>
-      <RecommendationModal isOpen={isOpenRecommendationModal} setIsOpen={setIsOpenRecommendationModal} recommendation={recommendation} loading={loading}></RecommendationModal>
+      ) : (
+        <LoadingOverlay></LoadingOverlay>
+      )}
     </div>
   );
 };

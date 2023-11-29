@@ -39,3 +39,15 @@ export const showErrorToast = (msg?: string, timer?: number) => {
     progress: undefined,
   });
 };
+
+export const showInfoToast = (msg?: string, timer?: number) => {
+  toast.info(msg || `Information.`, {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};

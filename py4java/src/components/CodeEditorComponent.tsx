@@ -7,7 +7,8 @@ type EditorProps = {
     onChange: (action: string, data: string) => void;
     theme: string | undefined;
     language: string | undefined;
-    code: string;
+  code: string;
+  readonly: boolean;
 }
 
 const CodeEditorComponenet = (props: EditorProps) => {
@@ -24,14 +25,15 @@ const CodeEditorComponenet = (props: EditorProps) => {
   }, [props.language]);
 
   return (
-    <div className="overlay rounded-md overflow-hidden w-full h-full bg-black shadow-4xl border-2">
+    <div className="overlay rounded-md w-full h-full bg-black shadow-4xl border-2">
       <Editor
         height="85vh"
         width={`100%`}
-        language= {props.language || "java"}
+        language={props.language || "java"}
         theme={props.theme}
         value={value}
         onChange={handleEditorChange}
+        options={{ readOnly: props.readonly }}
       />
     </div>
   );

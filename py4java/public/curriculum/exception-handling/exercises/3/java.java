@@ -7,7 +7,7 @@ class InvalidUsernameError extends Exception {
   }
 }
 
-public class Solution {
+public class Main {
 
   public static void main(String[] args) {
     try {

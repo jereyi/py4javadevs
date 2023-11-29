@@ -9,6 +9,7 @@ import type { LessonDetail } from "../utils/types";
 import { nameToDetailsMap } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { titleToFileName } from "../utils/general";
+import Markdown from "react-markdown";
 type LessonProps = {
   lessonNumber: number;
   lesson: LessonDetail;
@@ -50,13 +51,11 @@ const Curriculum = () => {
           >
             <div className="flex items-center">
               <div className="rounded-full text-black text-2xl font-cal w-16 h-16 bg-white border-2 border-black flex justify-center items-center mx-8">
-                {" "}
-                {props.lessonNumber}{" "}
+                {props.lessonNumber}
               </div>
               <div>
                 <div className="text-2xl font-bold font-cal">
-                  {" "}
-                  {props.lesson.title}{" "}
+                  {props.lesson.title}
                 </div>
               </div>
             </div>
@@ -65,9 +64,9 @@ const Curriculum = () => {
             </span>
           </summary>
           <div className="ml-24">
-            <p className="text-black text-center mt-3 mb-7 group-open:animate-fadeIn">
+            <Markdown className="text-black text-center text-xl mt-3 mb-7 pr-6 group-open:animate-fadeIn">
               {props.lesson.desc}
-            </p>
+            </Markdown>
             <div className="flex justify-around items-center">
               <button
                 className="flex items-center"
@@ -81,13 +80,8 @@ const Curriculum = () => {
                   className="flex items-center"
                   onClick={() => handleOnClickExercise(props.lesson)}
                 >
-                  <DocumentCheckIcon className="h-12 w-12 pl-1 mr-3">
-                    {" "}
-                  </DocumentCheckIcon>
-                  <div className="font-semibold font-cal text-xl">
-                    {" "}
-                    Exercise{" "}
-                  </div>
+                  <DocumentCheckIcon className="h-12 w-12 pl-1 mr-3"></DocumentCheckIcon>
+                  <div className="font-semibold font-cal text-xl">Exercise</div>
                 </button>
               )}
             </div>
@@ -104,7 +98,7 @@ const Curriculum = () => {
           Curriculum
         </h2>
         <p className="pb-4">
-          {namesAndDescriptions.length} Lessons &#x2022; 11 Practice Exercises
+          {namesAndDescriptions.length} Lessons &#x2022; {Array.from(namesAndDescriptions.values()).filter(val => val.hasExercises).length} Practice Exercises
         </p>
       </div>
       <div className="grid divide-y divide-neutral-200">
@@ -119,7 +113,7 @@ const Curriculum = () => {
           className="font-bold border-black"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <span className="hover:opacity-20 flex justify-center items-center text-center h-20">
+          <span className="hover:opacity-20 flex justify-center items-center text-center h-20 cursor-pointer">
             {!isExpanded ? (
               `Show all ${namesAndDescriptions.length} Lessons`
             ) : (

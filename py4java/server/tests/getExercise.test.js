@@ -15,7 +15,7 @@ describe("get-exercise route", function () {
         {
           question: "Test Question\n",
           java:
-            "public class Solution {\n" +
+            "public class Main {\n" +
             "\n" +
             "  public static void main(String[] args) {\n" +
             '    String test = "This is a test.";\n' +
@@ -26,7 +26,7 @@ describe("get-exercise route", function () {
         {
           question: "Another Test Question\n",
           java:
-            "public class Solution {\n" +
+            "public class Main {\n" +
             "\n" +
             "  public static void main(String[] args) {\n" +
             '    String test = "This is another test.";\n' +
