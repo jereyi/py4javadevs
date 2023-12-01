@@ -59,17 +59,20 @@ export async function google(req, res) {
   if (!code) {
     console.log(`Google Login Failed to Return a Code`);
     res.status(500).send("Server error in Google Login!");
+    return;
   }
   console.log(`The code is: ${code}`);
   const accessToken = await getAccessTokenFromCode(code);
   if (!accessToken) {
     console.log(`Google Login Failed to Return an Access Token`);
     res.status(500).send("Server error in Google Login!");
+    return;
   }
   const userInfo = await getGoogleUserInfo(accessToken);
   if (!userInfo) {
     console.log(`Google Login Failed to Return User Info`);
     res.status(500).send("Server error in Google Login!");
+    return;
   }
   req.session.google = {
     id: userInfo.id,

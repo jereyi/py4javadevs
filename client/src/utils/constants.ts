@@ -1,7 +1,7 @@
 import { LanguageOption, LessonDetail } from "./types";
 
 export const py4JavaDevsDesc =
-  "Unlock the power of Python with our consise lessons and exercises tailored for Java developed.";
+  "Unlock the power of Python with our consise lessons and exercises tailored for Java developers.";
 
 export const nameToDetailsMap: Map<String, LessonDetail> = new Map(
   Object.entries({

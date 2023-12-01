@@ -51,7 +51,7 @@ export async function getAccessTokenFromCode(code) {
     console.log(data); // { access_token, expires_in, token_type, refresh_token }
     return data.access_token;
   } catch (error) {
-    console.error("Errow while getting access token: " + error);
+    console.error("Error while getting access token: " + error);
     return null;
   }
 };
