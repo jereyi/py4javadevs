@@ -178,7 +178,7 @@ const Lesson = () => {
                       </Table.Cell>
                       <Table.Cell className="px-6 py-4 whitespace-pre-wrap w-[45%] text-base">
                         <div className="flex items-center">
-                          <div className="w-[85%]">
+                          <div className="w-[85%] text-sm">
                             {row.java && (
                               <SyntaxHighlighter
                                 style={prism}
@@ -221,7 +221,7 @@ const Lesson = () => {
                       </Table.Cell>
                       <Table.Cell className="pl-6 py-4 whitespace-pre-wrap w-[40%] text-base">
                         <div className="flex items-center">
-                          <div className="w-[85%]">
+                          <div className="w-[85%] text-sm">
                             {row.python && (
                               <SyntaxHighlighter
                                 style={prism}

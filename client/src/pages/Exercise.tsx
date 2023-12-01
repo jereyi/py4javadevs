@@ -56,6 +56,8 @@ const Exercise = () => {
 
   const [recommendation, setRecommendation] = useState("");
 
+  const [newRecommendation, setNewRecommendation] = useState(false);
+
   const { title, question } = useParams();
 
   const navigate = useNavigate();
@@ -113,6 +115,7 @@ const Exercise = () => {
         body: JSON.stringify({ code: codeCopy }),
       }).then((res) => res.json());
       showSuccessToast("Fetched recommendations!");
+      setNewRecommendation(true);
       setLastAnalyzedCode(codeCopy);
       setRecommendation(data);
       console.log(data);
@@ -144,6 +147,7 @@ const Exercise = () => {
   const onChange = (action: string, data: string) => {
     switch (action) {
       case "code": {
+        setNewRecommendation(false);
         setCode(data);
         break;
       }
@@ -257,6 +261,9 @@ const Exercise = () => {
     );
   }, []);
 
+  const aiButtonText = loading ? "Loading..." : <>
+    <SparklesIcon className={"w-6 h-6 mr-3 " + (newRecommendation ? "text-sage" : "")} /> {newRecommendation ? "See Recommendations" : "AI Analysis"}
+  </>
   return (
     <div className="relative w-screen min-h-screen">
       {exercises.size > 0 ? (
@@ -292,16 +299,10 @@ const Exercise = () => {
                     : fetchRecommendations()
                 }
                 className={customButtonStyle(
-                  "flex whitespace-nowrap px-4 py-2 my-2 mr-4"
+                  "flex whitespace-nowrap px-4 py-2 my-2 mr-4 " + (newRecommendation ? "border-sage shadow-sage text-sage" : "")
                 )}
               >
-                {loading ? (
-                  "Loading..."
-                ) : (
-                  <>
-                    <SparklesIcon className="w-6 h-6 mr-3" /> AI Analysis
-                  </>
-                )}
+                {aiButtonText}
               </button>
               <button
                 onClick={() => setIsOpenSolutionModal(true)}
@@ -313,7 +314,7 @@ const Exercise = () => {
           </div>
           <div className="flex flex-row lg:gap-8 flex-wrap lg:flex-nowrap items-start px-4 py-4">
             <SidebarComponent
-              className="hidden xl:flex"
+              className="hidden lg:flex"
               title={title!}
               numExercises={exercises.size}
               currExercise={question!}

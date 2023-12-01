@@ -79,10 +79,10 @@ const SolutionModal = (props: {
             </button>
           </div>
           <button
-            className={customButtonStyle("px-2 py-2")}
+            className={customButtonStyle("px-2 py-2 flex")}
             onClick={copyToClipboard}
           >
-            <ClipboardDocumentIcon className="w-6 h-6"></ClipboardDocumentIcon>
+            Copy <ClipboardDocumentIcon className="w-6 h-6 ml-1"></ClipboardDocumentIcon>
           </button>
         </Modal.Footer>
       </Modal>
