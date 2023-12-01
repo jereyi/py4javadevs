@@ -30,7 +30,7 @@ app.use(cors());
 // Configure the app to save a cookie
 // console.log(process.env.SESSION_SECRET);
 app.use(session({
-    keys: ['Shsh!Secret!'],
+    keys: [process.env.SESSION_SECRET],
     maxAge: 24 * 60 * 60 * 1000 * 365 // 365 days
 }))
   
