@@ -5,7 +5,11 @@ import { ExerciseDetail } from "../utils/types";
 import { customButtonStyle } from "../utils/styles";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Markdown from "react-markdown";
+import { ToastContainer, toast } from "react-toastify";
 import { materialDark, prism } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import copy from "copy-to-clipboard";
+import { ClipboardDocumentIcon } from "@heroicons/react/24/solid";
+import { showInfoToast } from "../utils/general";
 
 const RecommendationModal = ({
   isOpen,
@@ -19,8 +23,27 @@ const RecommendationModal = ({
   loading: Boolean | null;
 }) => {
   recommendation = recommendation.replace(/\n\n/g, "\n");
+
+  const copyToClipboard = () => {
+    if (!loading) {
+      copy(recommendation);
+      showInfoToast(`Recommendation copied to clipboard.`);
+    }
+  };
+
   return (
     <span data-testid="recommendationModal">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Modal size='5xl' show={isOpen} onClose={() => setIsOpen(false)}>
         <Modal.Header className="font-cal">
           {" "}
@@ -64,13 +87,21 @@ const RecommendationModal = ({
           />
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="flex justify-between">
           <button
             className={customButtonStyle("w-1/4 mr-2 text-black px-4 py-2")}
             onClick={() => setIsOpen(false)}
           >
             Close
           </button>
+          { !loading &&
+            <button
+              className={customButtonStyle("px-2 py-2 flex")}
+              onClick={copyToClipboard}
+            >
+              Copy <ClipboardDocumentIcon className="w-6 h-6 ml-1"></ClipboardDocumentIcon>
+            </button>
+          }
         </Modal.Footer>
       </Modal>
     </span>
