@@ -19,12 +19,14 @@ export async function getUserByNetid(netid) {
 
 export async function getUserByUserInfo(userInfo) {
   try {
-    console.log("Getting user with email: " + userInfo.email);
-    let user = await retrieveUser(userInfo.email);
+    const netid = userInfo.email.split("@")[0];
+    console.log(`Getting user with email (${userInfo.email}) and netid (${netid})`);
+
+    let user = await retrieveUser(netid);
     if (!user) {
       console.log("No user found, so creating user");
       const displayName = `${userInfo.given_name} ${userInfo.family_name}`
-      user = await createUser(userInfo.email, displayName);
+      user = await createUser(netid, displayName);
     }
     return user;
   } catch (error) {

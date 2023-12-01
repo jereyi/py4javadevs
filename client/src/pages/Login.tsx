@@ -29,12 +29,12 @@ const Login = () => {
     <div className="font-cal text-8xl whitespace-pre-wrap font-black flex items-center justify-center h-screen gap-10">
       <div>{"Python\nFor\nJava\nDevelopers"}</div>
       <div className="flex flex-col">
-        <button
+        {/* <button
           className={customButtonStyle("text-2xl mb-2 py-2 px-16")}
           onClick={handleLogin}
         >
           Login with CAS
-        </button>
+        </button> */}
         <button
           className={customButtonStyle("text-2xl mt-2 py-2 px-16")}
           onClick={handleGoogleLogin}
