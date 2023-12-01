@@ -2,13 +2,14 @@ import "cookie-session";
 import { addLessonToNetid, removeLessonFromNetid } from "../services/updateUser.service.js";
 
 export function addLesson(req, res, next) {
-    addLessonToNetid(req.body.lesson, req.session.cas.netid)
+  const netid = req.session.cas?.netid || req.session.google.email.split("@")[0];
+    addLessonToNetid(req.body.lesson, netid)
       .then((numRowsUpdated) =>
         numRowsUpdated
           ? res
               .status(200)
               .send(
-                `Successfully added ${req.body.lesson} to User with netid ${req.session.cas.netid}`
+                `Successfully added ${req.body.lesson} to User with netid ${netid}`
               )
           : res.status(404).send("Lesson was not added.")
       )
@@ -19,13 +20,14 @@ export function addLesson(req, res, next) {
   }
   
 export function deleteLesson(req, res, next) {
-    removeLessonFromNetid(req.body.lesson, req.session.cas.netid)
+    const netid = req.session.cas?.netid || req.session.google.email.split("@")[0];
+    removeLessonFromNetid(req.body.lesson, netid)
       .then((numRowsUpdated) =>
         numRowsUpdated ?
         res
           .status(200)
           .send(
-            `Successfully removed ${req.body.lesson} from User with netid ${req.session.cas.netid}`
+            `Successfully removed ${req.body.lesson} from User with netid ${netid}`
           ) : res.status(404).send("Lesson was not removed.")
       )
       .catch((err) => {
