@@ -129,7 +129,7 @@ const Lesson = () => {
             draggable
             pauseOnHover
           />
-          <div className="px-48 py-16 flex flex-col items-center">
+          <div className="px-24 py-16 flex flex-col items-center">
             {isComplete && (
               <div className="text-white font-cal text-2xl bg-sage py-2 px-32 mb-4 rounded-lg border-white border-2">
                 Complete
@@ -178,7 +178,7 @@ const Lesson = () => {
                       </Table.Cell>
                       <Table.Cell className="px-6 py-4 whitespace-pre-wrap w-[45%] text-base">
                         <div className="flex items-center">
-                          <div className="w-[85%] text-sm">
+                          <div className="w-[85%] text-xs">
                             {row.java && (
                               <SyntaxHighlighter
                                 style={prism}
@@ -221,7 +221,7 @@ const Lesson = () => {
                       </Table.Cell>
                       <Table.Cell className="pl-6 py-4 whitespace-pre-wrap w-[40%] text-base">
                         <div className="flex items-center">
-                          <div className="w-[85%] text-sm">
+                          <div className="w-[85%] text-xs">
                             {row.python && (
                               <SyntaxHighlighter
                                 style={prism}
