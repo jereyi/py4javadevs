@@ -1,0 +1,1 @@
+Python supports negative indexing, which allows you to access elements in a list from the end, with -1 representing the last element, -2 representing the second-to-last, and so on.
