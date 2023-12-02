@@ -29,7 +29,7 @@ const CodeEditorComponenet = (props: EditorProps) => {
       <Editor
         height="85vh"
         width={`100%`}
-        language={props.language || "java"}
+        language={props.language || "python"}
         theme={props.theme}
         value={value}
         onChange={handleEditorChange}

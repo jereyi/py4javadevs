@@ -107,20 +107,20 @@ export const nameToDetailsMap: Map<String, LessonDetail> = new Map(
       title: "User Input",
       desc: "Mechanism for obtaining data from the user during program execution.",
       prev: "Classes and Objects",
-      next: "File Handling",
-      hasExercises: true,
-    },
-    "file-handling": {
-      title: "File Handling",
-      desc: "Operations involving the reading from or writing to files, including opening, closing, reading, and writing data.",
-      prev: "User Input",
       next: "Exception Handling",
       hasExercises: true,
     },
     "exception-handling": {
       title: "Exception Handling",
       desc: "Techniques for gracefully managing and responding to errors or exceptional situations in a program, using `try`, `except`, and `finally` blocks.",
-      prev: "File Handling",
+      prev: "user-input",
+      next: "File Handling",
+      hasExercises: true,
+    },
+    "file-handling": {
+      title: "File Handling",
+      desc: "Operations involving the reading from or writing to files, including opening, closing, reading, and writing data.",
+      prev: "Exception Handling",
       next: null,
       hasExercises: true,
     },
@@ -128,6 +128,13 @@ export const nameToDetailsMap: Map<String, LessonDetail> = new Map(
 );
 
 export const languageOptions: LanguageOption[] = [
+  {
+    id: 71,
+    name: "Python (3.8.1)",
+    label: "Python (3.8.1)",
+    value: "python",
+    default: "# Write your solution here!",
+  },
   {
     id: 62,
     name: "Java (OpenJDK 13.0.1)",
@@ -139,13 +146,6 @@ export const languageOptions: LanguageOption[] = [
     id: 70,
     name: "Python (2.7.17)",
     label: "Python (2.7.17)",
-    value: "python",
-    default: "# Write your solution here!",
-  },
-  {
-    id: 71,
-    name: "Python (3.8.1)",
-    label: "Python (3.8.1)",
     value: "python",
     default: "# Write your solution here!",
   },
