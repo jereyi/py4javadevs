@@ -15,7 +15,7 @@ export async function createUser(netid, displayName) {
   }
 }
 
-// The User Table has the following fields: net_id, display_name, last_login, completed_lessons
+// The User Table has the following fields: net_id, display_name, first_login, completed_lessons
 export async function retrieveUser(netid) {
   try {
     const res = await pool.query("SELECT * FROM users WHERE net_id = ($1)", [netid]);

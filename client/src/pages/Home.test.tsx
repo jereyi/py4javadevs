@@ -14,13 +14,13 @@ describe("Home Page", () => {
     let user = {
       netid: "jDoe",
       displayName: "Jane Doe",
-      lastLogin: new Date("07/27/2023"),
+      firstLogin: new Date("07/27/2023"),
       completedLessons: ["variables"]
     } as UserInfo;
 
-    const setUser = (user: UserInfo) => {}
+    const setUser = (user: UserInfo) => { }
 
-    render(<CasUserContext.Provider value={{user, setUser}}><App /></CasUserContext.Provider>);
+    render(<CasUserContext.Provider value={{ user, setUser }}><App /></CasUserContext.Provider>);
   }
 
   test("renders home page correctly", async () => {

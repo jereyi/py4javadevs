@@ -63,11 +63,11 @@ describe("Exercise Page", () => {
     let user = {
       netid: "jDoe",
       displayName: "Jane Doe",
-      lastLogin: new Date("07/27/2023"),
+      firstLogin: new Date("07/27/2023"),
       completedLessons: ["variables"],
     } as UserInfo;
 
-    const setUser = (user: UserInfo) => {};
+    const setUser = (user: UserInfo) => { };
 
     render(
       <CasUserContext.Provider value={{ user, setUser }}>
@@ -155,7 +155,7 @@ describe("Exercise Page", () => {
       name: /view solutions/i,
     });
     let solutionModal = screen.queryByRole("dialog");
-    
+
 
     // Solutions modal should not be displayed before button clicked.
     expect(solutionModal).toBeNull();
@@ -289,7 +289,7 @@ describe("Exercise Page", () => {
       },
       method: "GET",
       params: { base64_encoded: "true", fields: "*" },
-      url: `${process.env.REACT_APP_RAPID_API_URL }/${TEST_TOKEN}`,
+      url: `${process.env.REACT_APP_RAPID_API_URL}/${TEST_TOKEN}`,
     });
   });
 

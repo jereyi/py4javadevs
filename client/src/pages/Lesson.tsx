@@ -101,7 +101,7 @@ const Lesson = () => {
       setUser({
         netid: userInfo.net_id,
         displayName: userInfo.display_name,
-        lastLogin: new Date(userInfo.last_login),
+        firstLogin: new Date(userInfo.first_login),
         completedLessons: userInfo.completed_lessons,
       });
       showSuccessToast(

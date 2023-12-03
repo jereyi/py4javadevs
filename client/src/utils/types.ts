@@ -46,6 +46,6 @@ export type ExerciseDetail = {
 export type UserInfo = {
     netid: string;
     displayName: string;
-    lastLogin: Date;
+    firstLogin: Date;
     completedLessons: string[];
   }

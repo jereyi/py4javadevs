@@ -18,14 +18,14 @@ describe("update-user route", function () {
     let user1 = {
       net_id: "jereyi",
       display_name: "Jessica-Ann Ereyi",
-      last_login: "2016-01-25T15:10:10.555Z",
+      first_login: "2016-01-25T15:10:10.555Z",
       completed_lessons: [],
     };
 
     let user2 = {
       net_id: "jereyi",
       display_name: "Jessica-Ann Ereyi",
-      last_login: "2016-01-25T15:10:10.555Z",
+      first_login: "2016-01-25T15:10:10.555Z",
       completed_lessons: ["testing"],
     };
 
@@ -35,15 +35,15 @@ describe("update-user route", function () {
         "CREATE TEMPORARY TABLE users \
           (net_id TEXT NOT NULL, \
             display_name TEXT NOT NULL, \
-            last_login TIMESTAMPTZ DEFAULT now(), \
+            first_login TIMESTAMPTZ DEFAULT now(), \
             completed_lessons TEXT[] NOT NULL DEFAULT ARRAY[]:: text[])"
       );
       await pool.query(
-        "INSERT INTO users (net_id, display_name, last_login, completed_lessons) VALUES ($1, $2, $3, $4)",
+        "INSERT INTO users (net_id, display_name, first_login, completed_lessons) VALUES ($1, $2, $3, $4)",
         [
           user1.net_id,
           user1.display_name,
-          user1.last_login,
+          user1.first_login,
           user1.completed_lessons,
         ]
       );
@@ -118,14 +118,14 @@ describe("update-user route", function () {
     let user1 = {
       net_id: "jereyi",
       display_name: "Jessica-Ann Ereyi",
-      last_login: "2016-01-25T15:10:10.555Z",
+      first_login: "2016-01-25T15:10:10.555Z",
       completed_lessons: ["testing"],
     };
 
     let user2 = {
       net_id: "jereyi",
       display_name: "Jessica-Ann Ereyi",
-      last_login: "2016-01-25T15:10:10.555Z",
+      first_login: "2016-01-25T15:10:10.555Z",
       completed_lessons: [],
     };
 
@@ -135,15 +135,15 @@ describe("update-user route", function () {
         "CREATE TEMPORARY TABLE users \
           (net_id TEXT NOT NULL, \
             display_name TEXT NOT NULL, \
-            last_login TIMESTAMPTZ DEFAULT now(), \
+            first_login TIMESTAMPTZ DEFAULT now(), \
             completed_lessons TEXT[] NOT NULL DEFAULT ARRAY[]:: text[])"
       );
       await pool.query(
-        "INSERT INTO users (net_id, display_name, last_login, completed_lessons) VALUES ($1, $2, $3, $4)",
+        "INSERT INTO users (net_id, display_name, first_login, completed_lessons) VALUES ($1, $2, $3, $4)",
         [
           user1.net_id,
           user1.display_name,
-          user1.last_login,
+          user1.first_login,
           user1.completed_lessons,
         ]
       );

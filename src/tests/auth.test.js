@@ -110,14 +110,14 @@ describe("auth route", function () {
     let user1 = {
       net_id: "jereyi",
       display_name: "Jessica-Ann Ereyi",
-      last_login: "2016-01-25T15:10:10.555Z",
+      first_login: "2016-01-25T15:10:10.555Z",
       completed_lessons: ["testing"],
     };
 
     let user2 = {
       net_id: "jDoe",
       display_name: "Jane Doe",
-      last_login: "2023-11-29T02:49:27.728Z",
+      first_login: "2023-11-29T02:49:27.728Z",
       completed_lessons: [],
     };
 
@@ -127,13 +127,13 @@ describe("auth route", function () {
         "CREATE TEMPORARY TABLE users \
           (net_id TEXT NOT NULL, \
             display_name TEXT NOT NULL, \
-            last_login TIMESTAMPTZ DEFAULT now(), \
+            first_login TIMESTAMPTZ DEFAULT now(), \
             completed_lessons TEXT[] NOT NULL DEFAULT ARRAY[]:: text[])"
       );
       console.log(response);
       response = await pool.query(
-        "INSERT INTO users (net_id, display_name, last_login, completed_lessons) VALUES ($1, $2, $3, $4)",
-        [user1.net_id, user1.display_name, user1.last_login, user1.completed_lessons]
+        "INSERT INTO users (net_id, display_name, first_login, completed_lessons) VALUES ($1, $2, $3, $4)",
+        [user1.net_id, user1.display_name, user1.first_login, user1.completed_lessons]
       );
       console.log(response);
     });
