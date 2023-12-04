@@ -120,7 +120,7 @@ const Exercise = () => {
       setRecommendation(data);
       console.log(data);
     } catch (error) {
-      showErrorToast("Error fetching recommendations");
+      showErrorToast("Error fetching recommendations. Try again.");
       setIsOpenRecommendationModal(false);
     }
     setLoading(false);
