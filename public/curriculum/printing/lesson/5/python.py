@@ -1,1 +1,1 @@
-print("Hello", "World", separator=", ") # prints Hello, World 
+print("Hello", "World", sep=", ") # prints Hello, World 
