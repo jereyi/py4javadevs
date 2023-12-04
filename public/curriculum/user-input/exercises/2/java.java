@@ -5,7 +5,7 @@ public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     String correctPassword = "secret";
-    System.out.print("Enter the password: ");
+    System.out.println("Enter the password: ");
     String password = scanner.nextLine();
 
     if (password.equals(correctPassword)) {
