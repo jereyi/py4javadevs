@@ -6,6 +6,7 @@ import Lesson from "./pages/Lesson";
 import Exercise from "./pages/Exercise";
 import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
+import ScrollToTop from "./components/ScrollToTop";
 import React from "react";
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }
