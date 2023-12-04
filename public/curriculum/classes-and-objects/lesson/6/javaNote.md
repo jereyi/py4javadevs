@@ -1,1 +1,0 @@
-In Python, access modifiers are indicated through naming conventions rather than explicit keywords. Unlike in Java, there was ways to circumvent access control in Python to access protected and private attributes by their names, but it is discouraged.

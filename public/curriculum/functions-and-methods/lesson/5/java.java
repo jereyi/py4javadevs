@@ -1,4 +1,4 @@
-public class SquareCalculator {
+public class Main {
     public static int calculateSquare(int number) {
         return number * number;
     }

@@ -1,1 +1,0 @@
-In this example, attempting to call the first add method results in an error, as it has been overwritten by the second method.
