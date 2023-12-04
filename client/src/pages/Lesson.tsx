@@ -282,8 +282,10 @@ const Lesson = () => {
                   className={customButtonStyle(
                     "flex items-center z-10 mt-8 text-lg px-4 py-2"
                   )}
-                  onClick={() =>
-                    navigate(`/lesson/${titleToFileName(details.prev!)}`)
+                  onClick={() => {
+                    setRows([]);
+                    navigate(`/lesson/${titleToFileName(details.prev!)}`);
+                  }
                   }
                 >
                   <ArrowSmallLeftIcon className="h-6 w-6 mr-2"></ArrowSmallLeftIcon>
@@ -306,8 +308,10 @@ const Lesson = () => {
                   className={customButtonStyle(
                     "z-10 flex items-center mt-8 text-lg px-4 py-2"
                   )}
-                  onClick={() =>
+                  onClick={() => {
+                    setRows([]);
                     navigate(`/lesson/${titleToFileName(details.next!)}`)
+                    }
                   }
                 >
                   Next
