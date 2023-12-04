@@ -1,0 +1,1 @@
+In Python, the values in dictionary can be of any data type and the keys can be of any *immutable* data type.

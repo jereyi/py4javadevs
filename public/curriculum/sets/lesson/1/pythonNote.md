@@ -1,0 +1,1 @@
+In Python, the values in a set can be of any *immutable* data type.
