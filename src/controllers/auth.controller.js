@@ -1,9 +1,22 @@
+/***************************************************************************************
+ *    Title: CAS-Auth-ExpressJS source code
+ *    Author: Palaparthi, Aditya
+ *    Date: 2023
+ *    Code version: 1.0
+ *    Availability: https://github.com/palapav/CAS-Auth-ExpressJS/tree/main.
+ *
+ ***************************************************************************************/
 import "cookie-session";
 import CAS from "cas";
-import { getUserByNetid, getUserByUserInfo, getAccessTokenFromCode, getGoogleUserInfo } from "../services/auth.service.js";
-import dotenv from 'dotenv';
+import {
+  getUserByNetid,
+  getUserByUserInfo,
+  getAccessTokenFromCode,
+  getGoogleUserInfo,
+} from "../services/auth.service.js";
+import dotenv from "dotenv";
 import e from "express";
-dotenv.config()
+dotenv.config();
 
 var cas = new CAS({
   base_url: process.env.CAS_ENDPOINT,
@@ -13,12 +26,13 @@ var cas = new CAS({
 export async function verify(req, res) {
   try {
     // Check if the user has a redirection destination
-    let redirectDestination =
-      process.env.SERVER_URL + "/home";
+    let redirectDestination = process.env.SERVER_URL + "/home";
 
     // If the user already has a valid CAS session then send them to their destination
     if (req.session.cas) {
-      console.log("Existing valid cas session: " + JSON.stringify(req.session.cas))
+      console.log(
+        "Existing valid cas session: " + JSON.stringify(req.session.cas)
+      );
       res.redirect(redirectDestination);
       return;
     }
@@ -45,7 +59,7 @@ export async function verify(req, res) {
         ticket: ticket,
         netid: netid,
       };
-      console.log("Beginning cas session: " + JSON.stringify(req.session.cas))
+      console.log("Beginning cas session: " + JSON.stringify(req.session.cas));
       res.redirect(redirectDestination);
     });
   } catch (error) {
@@ -78,11 +92,12 @@ export async function google(req, res) {
     id: userInfo.id,
     email: userInfo.email,
     given_name: userInfo.given_name,
-    family_name: userInfo.family_name
-  }
-  console.log("Beginning Google login session: " + JSON.stringify(req.session.google))
+    family_name: userInfo.family_name,
+  };
+  console.log(
+    "Beginning Google login session: " + JSON.stringify(req.session.google)
+  );
   res.redirect(process.env.SERVER_URL + "/home");
-
 }
 
 export async function getUser(req, res) {
@@ -94,7 +109,7 @@ export async function getUser(req, res) {
     if (user) {
       res.json(JSON.stringify(user));
       return;
-    } 
+    }
   } else if (req.session.google?.email) {
     console.log("Google Login session exists");
     const user = await getUserByUserInfo(req.session.google);
@@ -102,7 +117,7 @@ export async function getUser(req, res) {
     if (user) {
       res.json(JSON.stringify(user));
       return;
-    } 
+    }
   }
   res.status(404).send("User not found");
 }

@@ -1,5 +1,11 @@
-
-
+/***************************************************************************************
+*    Title: Fetch Resolver source code
+*    Author: Sambath, Mukundhan
+*    Date: 2023
+*    Code version: 1.0
+*    Availability: https://gist.github.com/mukundhan94/102334a8ba9b84d93a1b5ba4b7838647
+*
+***************************************************************************************/
 type Method = "get" | "options" | "post" | "put" | "patch" | "delete";
     
 // https://httpstat.us

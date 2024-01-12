@@ -1,5 +1,11 @@
-// https://www.freecodecamp.org/news/how-to-build-react-based-code-editor/
-
+/***************************************************************************************
+*    Title: CodeRush source code
+*    Author: Arora, Manu 
+*    Date: 2023
+*    Code version: 1.0
+*    Availability: https://github.com/manuarora700/react-code-editor
+*
+***************************************************************************************/
 import React, { useEffect, useState } from "react";
 import CodeEditorComponent from "../components/CodeEditorComponent";
 import axios from "axios";

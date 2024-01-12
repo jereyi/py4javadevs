@@ -1,5 +1,11 @@
-// ThemeDropdown.js
-
+/***************************************************************************************
+*    Title: CodeRush source code
+*    Author: Arora, Manu 
+*    Date: 2023
+*    Code version: 1.0
+*    Availability: https://github.com/manuarora700/react-code-editor
+*
+***************************************************************************************/
 import React from "react";
 import Select from "react-select";
 import { ThemeOption } from "../utils/types";

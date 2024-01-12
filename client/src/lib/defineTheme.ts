@@ -1,3 +1,11 @@
+/***************************************************************************************
+ *    Title: CodeRush source code
+ *    Author: Arora, Manu
+ *    Date: 2023
+ *    Code version: 1.0
+ *    Availability: https://github.com/manuarora700/react-code-editor
+ *
+ ***************************************************************************************/
 import loader from "@monaco-editor/loader";
 import monacoThemes from "monaco-themes/themes/themelist.json";
 
